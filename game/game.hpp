@@ -10,6 +10,7 @@ class Game
 {
     public: 
         Game(int r);
+        void render();
         void run();
 
     private:
@@ -17,5 +18,6 @@ class Game
         int rounds;
         bool game_status;
         Spaceship spaceship;
+
 };
 #endif
