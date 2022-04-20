@@ -1,16 +1,20 @@
 CC := g++
 CCFLAGS += -l SDL2 -l SDL2_image -l SDL2_ttf -l SDL2_mixer
 
-all: test.out
+all: starwars.out
 
-test.out: main.o rsdl.o
-	$(CC) main.o rsdl.o $(CCFLAGS) -o test.out
+starwars.out: main.o rsdl.o game.o
+	$(CC) main.o rsdl.o $(CCFLAGS) -o starwars.out
 
-main.o: src/rsdl.hpp ss/main.cpp
-	$(CC) -c ss/main.cpp -o main.o
+main.o: src/rsdl.hpp game.hpp main.cpp
+	$(CC) -c main.cpp -o main.o
+
+game.o : src/rsdl.hpp game.hpp game.cpp
+	${CC} -c game.cpp -o game.o
 
 rsdl.o: src/rsdl.hpp src/rsdl.cpp
 	$(CC) -c src/rsdl.cpp -o rsdl.o
+
 
 .PHONY: clean
 clean:
