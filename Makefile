@@ -6,10 +6,10 @@ all: starwars.out
 starwars.out: main.o rsdl.o game.o
 	$(CC) main.o rsdl.o $(CCFLAGS) -o starwars.out
 
-main.o: src/rsdl.hpp game.hpp main.cpp
+main.o: src/rsdl.hpp game/game.hpp main.cpp
 	$(CC) -c main.cpp -o main.o
 
-game.o : src/rsdl.hpp game.hpp game.cpp
+game.o : src/rsdl.hpp game/game.hpp game.cpp
 	${CC} -c game.cpp -o game.o
 
 rsdl.o: src/rsdl.hpp src/rsdl.cpp
