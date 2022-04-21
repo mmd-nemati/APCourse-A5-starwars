@@ -12,7 +12,7 @@ class Game
         Game(int r);
         void render();
         void run();
-
+        bool process_event();
     private:
         Window* win;
         int rounds;
