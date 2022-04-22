@@ -4,10 +4,11 @@
 int main(int argc, char *argv[])
 {
     Game game(4);
-    while(game.process_event())
+    bool game_running = true;
+    while(game_running)
     {
+        game_running = game.process_event();
         game.render();
-        
     }
     return 0;
 }

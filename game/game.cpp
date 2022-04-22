@@ -22,19 +22,10 @@ void Game:: render()
 
 void Game::handle_key_press(int dir)
 {
-    /*if (event.get_pressed_key() == 'w')
-        spaceship.move(UP);
-    else if (event.get_pressed_key() == 's')
-        spaceship.move(DOWN);
-    else if (event.get_pressed_key() == 'a')
-        spaceship.move(LEFT);
-    else if (event.get_pressed_key() == 'd')
-        spaceship.move(RIGHT);
-    else    
-        return;*/
-    spaceship.move(dir);
+    spaceship.move();
 }
-int get_direction(Event &event)
+
+int get_move_direction(Event &event)
 {
     switch (event.get_pressed_key())
     {
@@ -53,33 +44,27 @@ int get_direction(Event &event)
 bool Game:: process_event()
 {
     Event new_event;
-    int dir = dir;
-   // if (flag == true && new_event.get_type() != Event::KEY_RELEASE)
-    //    handle_key_press(new_event);
-    if (this->win->has_pending_event() || flag == true)
+    int d;
+    new_event = this->win->poll_for_event();
+    spaceship.move();
+    switch(new_event.get_type())
     {
-        new_event = this->win->poll_for_event();
-        //if (flag == true)
-         //   handle_key_press(dir);
-        switch(new_event.get_type())
-        {
-            case Event::QUIT:
-                return false;
-            
-            case Event::KEY_PRESS:
-                flag = true;
-                dir = get_direction(new_event);
-               // move_event = new_event;
-                handle_key_press(dir);
-            
-            case Event::KEY_RELEASE:
-                dir = 0;
-                flag = false;
+        case Event::QUIT:
+            return false;
 
-        }
+        case Event::KEY_PRESS:
+            d = get_move_direction(new_event);
+            spaceship.set_moving(d);
+            break;
+        
+        case Event::KEY_RELEASE:
+            if (spaceship.get_dir() == get_move_direction(new_event))
+                spaceship.stop();
+            break;        
+        
+        default:;
+        
     }
-
-
     return true;
 }
 

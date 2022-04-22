@@ -14,13 +14,19 @@ class Spaceship
     public:
         Spaceship();
         //Spaceship(Window* win);
-        void move(int direction);
+        void move();
+        void stop();
         Rectangle get_body() { return body; };
+        
+        void set_moving(int _dir);
+        int get_dir() { return dir; }
     private:
         Point location;
         double vx, vy;
         double ax, ay;
         Rectangle body;
+        int dir;
+        bool is_moving;
 };
 
 #endif
