@@ -4,7 +4,7 @@ CCFLAGS += -l SDL2 -l SDL2_image -l SDL2_ttf -l SDL2_mixer
 all: starwars.out
 
 starwars.out: rsdl.o game.o spaceship.o bullet.o main.o 
-	$(CC) main.o rsdl.o game.o spaceship.o $(CCFLAGS) -o starwars.out
+	$(CC) main.o rsdl.o game.o spaceship.o bullet.o $(CCFLAGS) -o starwars.out
 
 rsdl.o: src/rsdl.hpp src/rsdl.cpp
 	$(CC) -c src/rsdl.cpp -o rsdl.o
