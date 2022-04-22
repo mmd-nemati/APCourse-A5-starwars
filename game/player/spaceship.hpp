@@ -3,12 +3,18 @@
 #include "../../src/rsdl.hpp"
 
 constexpr double INITIAL_VELOCITY = 0;
-constexpr double SPACESHIP_ACCELERATION = 0.1;
+constexpr double SPACESHIP_ACCELERATION = 1;
+constexpr int UP = 1;
+constexpr int DOWN = 2;
+constexpr int LEFT = 3;
+constexpr int RIGHT = 4;
+
 class Spaceship 
 {
     public:
         Spaceship();
         //Spaceship(Window* win);
+        void move(int direction);
         Rectangle get_body() { return body; };
     private:
         Point location;

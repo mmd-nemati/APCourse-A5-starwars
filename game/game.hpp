@@ -14,6 +14,7 @@ class Game
         Game(int r);
         void render();
         void run();
+        void handle_key_press(Event& event);
         bool process_event();
     private:
         Window* win;

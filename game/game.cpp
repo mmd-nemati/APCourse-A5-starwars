@@ -18,6 +18,20 @@ void Game:: render()
     delay(50);
 }
 
+void Game::handle_key_press(Event& event)
+{
+    if (event.get_pressed_key() == 'w')
+        spaceship.move(UP);
+    else if (event.get_pressed_key() == 's')
+        spaceship.move(DOWN);
+    else if (event.get_pressed_key() == 'a')
+        spaceship.move(LEFT);
+    else if (event.get_pressed_key() == 'd')
+        spaceship.move(RIGHT);
+    else    
+        return;
+}
+
 bool Game:: process_event()
 {
     Event new_event;
@@ -28,9 +42,17 @@ bool Game:: process_event()
         {
             case Event::QUIT:
                 return false;
+            
+            case Event::KEY_PRESS:
+                handle_key_press(new_event);
+
+                 
 
         }
     }
 
+
     return true;
 }
+
+
