@@ -1,7 +1,7 @@
 #ifndef __GAME_H__
 #define __GAME_H__
 #include "../src/rsdl.hpp"
-#include "player/spaceship.hpp"
+#include "spaceship.hpp"
 
 constexpr int WINDOW_WIDTH = 1024;
 constexpr int WINDOW_HEIGHT = 768;

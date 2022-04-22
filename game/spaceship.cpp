@@ -1,6 +1,6 @@
-#include "../../src/rsdl.hpp"
+#include "../src/rsdl.hpp"
 #include "spaceship.hpp"
-
+#include "bullet.hpp"
 
 Spaceship::Spaceship()
   :  body(462, 768-SPACESHIP_HEIGHT, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)

@@ -1,6 +1,7 @@
 #ifndef __SPACESHIP_H__
 #define __SPACESHIP_H__
-#include "../../src/rsdl.hpp"
+#include "../src/rsdl.hpp"
+#include "bullet.hpp"
 
 constexpr int SPACESHIP_HEIGHT = 125;
 constexpr int SPACESHIP_WIDTH = 69;
