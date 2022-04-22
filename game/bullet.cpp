@@ -7,7 +7,13 @@ Bullet::Bullet(Point _loc)
     damage = BULLET_DAMAGE;
 }
 
+void Bullet::move()
+{
+    vy = BULLET_SPEED;
+    location.y += vy;
+}
+
 void Bullet::set_location(Point _loc)
 {
-    location = {_loc.x, _loc.y};
+    location = _loc;
 }

@@ -82,5 +82,24 @@ void Spaceship::shoot()
 {
     Point weapon_location = {location.x + SPACESHIP_WIDTH/2 - BULLET_SCALE/2, location.y};
     Bullet new_bullet(weapon_location);
+    new_bullet.set_location(weapon_location);
     bullets.push_back(new_bullet);
+}
+
+bool is_out_of_map(Point _loc)
+{
+    return (_loc.x < 0 || _loc.x > 1024 || _loc.y < 0 || _loc.y > 768);
+}
+
+void Spaceship::bullets_move()
+{
+    for (int i = 0; i < bullets.size(); i++)
+    {
+        if (is_out_of_map(bullets[i].get_loc()))
+        {
+            bullets.erase(bullets.begin() + i);
+            continue;
+        }
+        bullets[i].move();
+    }
 }

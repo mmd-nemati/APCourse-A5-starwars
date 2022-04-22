@@ -18,8 +18,11 @@ void Game:: render()
     win->draw_img("assets/photos/ship.png",spaceship.get_body());
     //win->draw_rect(spaceship.get_body());
     for (int i = 0; i < spaceship.get_bullets().size(); i++)
-        win->draw_img("assets/photos/ship-bullet.png", spaceship.get_bullets()[i].get_body());
+        win->draw_img("assets/photos/ship-bullet.png", 
+        Rectangle(spaceship.get_bullets()[i].get_loc(), BULLET_SCALE, BULLET_SCALE));
+
         //win->draw_rect(spaceship.get_bullets()[i].get_body(), WHITE);
+        //win->draw_img("assets/photos/ship-bullet.png", spaceship.get_bullets()[i].get_body());
     win->update_screen();
     delay(30);
 }
@@ -51,6 +54,7 @@ bool Game:: process_event()
     int d;
     new_event = this->win->poll_for_event();
     spaceship.move();
+    spaceship.bullets_move();
     switch(new_event.get_type())
     {
         case Event::QUIT:
