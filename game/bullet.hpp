@@ -3,7 +3,7 @@
 #include "../src/rsdl.hpp"
 
 constexpr int BULLET_DAMAGE = 50;
-constexpr int BULLET_SCALE = 10;
+constexpr int BULLET_SCALE = 18;
 class Bullet
 {
     public:
