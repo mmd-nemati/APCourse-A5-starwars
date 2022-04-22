@@ -48,26 +48,24 @@ void Spaceship::move()
         {
             vy = MOVING_VELOCITY;
             location.y -= vy;
-            body = Rectangle(location.x, location.y, SPACESHIP_WIDTH, SPACESHIP_HEIGHT);
         }
         else if (dir == DOWN && !goes_out_of_map(DOWN, location.y))
         {
             vy = MOVING_VELOCITY;
             location.y += vy;
-            body = Rectangle(location.x, location.y, SPACESHIP_WIDTH, SPACESHIP_HEIGHT);
         }
         if (dir == LEFT && !goes_out_of_map(LEFT, location.x))
         {
             vx = MOVING_VELOCITY;
             location.x -= vx;
-            body = Rectangle(location.x, location.y, SPACESHIP_WIDTH, SPACESHIP_HEIGHT);
         }
         else if (dir == RIGHT && !goes_out_of_map(RIGHT, location.x))
         {
             vx = MOVING_VELOCITY;
             location.x += vx;
-            body = Rectangle(location.x, location.y, SPACESHIP_WIDTH, SPACESHIP_HEIGHT);
         }
+        
+        body = Rectangle(location.x, location.y, SPACESHIP_WIDTH, SPACESHIP_HEIGHT);
     }
 }
 
