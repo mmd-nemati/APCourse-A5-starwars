@@ -1,6 +1,5 @@
 #include "../src/rsdl.hpp"
 #include "spaceship.hpp"
-#include "bullet.hpp"
 
 Spaceship::Spaceship()
   :  body(462, 768-SPACESHIP_HEIGHT, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
@@ -77,4 +76,11 @@ void Spaceship::stop()
     vx = 0;
     vy = 0;
     is_moving = false;
+}
+
+void Spaceship::shoot()
+{
+    Point weapon_location = {location.x + SPACESHIP_WIDTH/2 - BULLET_SCALE/2, location.y};
+    Bullet new_bullet(weapon_location);
+    bullets.push_back(new_bullet);
 }

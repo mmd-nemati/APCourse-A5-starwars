@@ -17,6 +17,8 @@ void Game:: render()
     win->draw_img("assets/photos/back.png");
     win->draw_img("assets/photos/ship.png",spaceship.get_body());
     //win->draw_rect(spaceship.get_body());
+    for (int i = 0; i < spaceship.get_bullets().size(); i++)
+        win->draw_rect(spaceship.get_bullets()[i].get_body(), WHITE);
     win->update_screen();
     delay(30);
 }
@@ -54,9 +56,22 @@ bool Game:: process_event()
             return false;
 
         case Event::KEY_PRESS:
-            d = get_move_direction(new_event);
-            spaceship.set_moving(d);
+        {
+            char pressed_key = new_event.get_pressed_key();
+            if (pressed_key == 'w')
+                spaceship.set_moving(UP);
+            if (pressed_key == 's')
+                spaceship.set_moving(DOWN);
+            if (pressed_key == 'a')
+                spaceship.set_moving(LEFT);
+            if (pressed_key == 'd')
+                spaceship.set_moving(RIGHT);
+            if (pressed_key == ' ')
+                spaceship.shoot();
+                //std::cout << "yes" << std::endl;
+            //d = get_move_direction(new_event);
             break;
+        }
         
         case Event::KEY_RELEASE:
             if (spaceship.get_dir() == get_move_direction(new_event))

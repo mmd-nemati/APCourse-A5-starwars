@@ -2,7 +2,7 @@
 #define __SPACESHIP_H__
 #include "../src/rsdl.hpp"
 #include "bullet.hpp"
-
+#include <vector>
 constexpr int SPACESHIP_HEIGHT = 125;
 constexpr int SPACESHIP_WIDTH = 69;
 constexpr double INITIAL_VELOCITY = 0;
@@ -19,10 +19,12 @@ class Spaceship
         //Spaceship(Window* win);
         void move();
         void stop();
+        void shoot();
         Rectangle get_body() { return body; };
         
         void set_moving(int _dir);
         int get_dir() { return dir; }
+        std::vector<Bullet> get_bullets() { return bullets; }
     private:
         Point location;
         double vx, vy;
@@ -30,6 +32,7 @@ class Spaceship
         Rectangle body;
         int dir;
         bool is_moving;
+        std::vector<Bullet> bullets;
 };
 
 #endif
