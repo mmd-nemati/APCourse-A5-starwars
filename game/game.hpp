@@ -14,13 +14,16 @@ class Game
         Game(int r);
         void render();
         void run();
-        void handle_key_press(Event& event);
+        void handle_key_press(int dir);
         bool process_event();
     private:
         Window* win;
         int rounds;
         bool game_status;
         Spaceship spaceship;
+        bool flag;
+       // int dir;
+        //Event move_event;
 
 };
 #endif

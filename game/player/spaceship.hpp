@@ -3,7 +3,7 @@
 #include "../../src/rsdl.hpp"
 
 constexpr double INITIAL_VELOCITY = 0;
-constexpr double SPACESHIP_ACCELERATION = 1;
+constexpr double MOVING_VELOCITY = 30;
 constexpr int UP = 1;
 constexpr int DOWN = 2;
 constexpr int LEFT = 3;
