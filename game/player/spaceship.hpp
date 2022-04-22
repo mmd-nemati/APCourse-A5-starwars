@@ -2,8 +2,10 @@
 #define __SPACESHIP_H__
 #include "../../src/rsdl.hpp"
 
+constexpr int SPACESHIP_HEIGHT = 125;
+constexpr int SPACESHIP_WIDTH = 69;
 constexpr double INITIAL_VELOCITY = 0;
-constexpr double MOVING_VELOCITY = 30;
+constexpr double MOVING_VELOCITY = 20;
 constexpr int UP = 1;
 constexpr int DOWN = 2;
 constexpr int LEFT = 3;

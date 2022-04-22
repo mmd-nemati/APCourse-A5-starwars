@@ -15,9 +15,10 @@ void Game:: render()
 {
     win->clear();
     win->draw_img("assets/photos/back.png");
-    win->draw_rect(spaceship.get_body(), RED);
+    win->draw_img("assets/photos/ship.png",spaceship.get_body());
+    //win->draw_rect(spaceship.get_body());
     win->update_screen();
-    delay(50);
+    delay(30);
 }
 
 void Game::handle_key_press(int dir)

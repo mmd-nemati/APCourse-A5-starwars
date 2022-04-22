@@ -3,7 +3,7 @@
 
 
 Spaceship::Spaceship()
-  :  body(462, 668, 100, 100)
+  :  body(462, 668, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
 {
     location =  {462, 668};
     vx = INITIAL_VELOCITY;
@@ -28,25 +28,25 @@ void Spaceship::move()
         {
             vy = MOVING_VELOCITY;
             location.y -= vy;
-            body = Rectangle(location.x, location.y, 100, 100);
+            body = Rectangle(location.x, location.y, SPACESHIP_WIDTH, SPACESHIP_HEIGHT);
         }
         else if (dir == DOWN)
         {
             vy = MOVING_VELOCITY;
             location.y += vy;
-            body = Rectangle(location.x, location.y, 100, 100);
+            body = Rectangle(location.x, location.y, SPACESHIP_WIDTH, SPACESHIP_HEIGHT);
         }
         if (dir == LEFT)
         {
             vx = MOVING_VELOCITY;
             location.x -= vx;
-            body = Rectangle(location.x, location.y, 100, 100);
+            body = Rectangle(location.x, location.y, SPACESHIP_WIDTH, SPACESHIP_HEIGHT);
         }
         else if (dir == RIGHT)
         {
             vx = MOVING_VELOCITY;
             location.x += vx;
-            body = Rectangle(location.x, location.y, 100, 100);
+            body = Rectangle(location.x, location.y, SPACESHIP_WIDTH, SPACESHIP_HEIGHT);
         }
     }
 }
