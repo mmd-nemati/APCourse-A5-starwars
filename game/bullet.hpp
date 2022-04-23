@@ -3,13 +3,14 @@
 #include "../src/rsdl.hpp"
 
 constexpr int BULLET_SCALE = 18;
-constexpr double BULLET_SPEED = -20;
+constexpr double SPACESHIP_BULLET_SPEED = -20;
+constexpr double ENEMY_BULLET_SPEED = 20;
 class Bullet
 {
     public:
         Bullet();
         Bullet(Point _loc);
-        void move();
+        void move(double speed);
     
         void set_location(Point _loc);
         Point get_loc() { return location; }

@@ -8,6 +8,8 @@ constexpr int WINDOW_WIDTH = 1024;
 constexpr int WINDOW_HEIGHT = 768;
 constexpr bool GAME_RUNNING = true;
 constexpr bool GAME_STOPPED = false;
+constexpr int SPACESHIP_SHOOT = 1;
+constexpr int ENEMY_SHOOT = 2;
 
 class Game
 {
@@ -20,6 +22,8 @@ class Game
         void create_enemies();
         void process_enemy_hit();
         void delete_enemy(int index);
+        void bullets_move(std::vector<Bullet> bullets, int shooter);
+        void enemies_bullets_move();
         bool get_status() { return game_status; }       
     private:
         Window* win;

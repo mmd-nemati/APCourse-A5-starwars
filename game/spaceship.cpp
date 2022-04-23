@@ -84,12 +84,12 @@ void Spaceship::shoot()
     bullets.push_back(new_bullet);
 }
 
-bool is_out_of_map(Point _loc)
-{
-    return (_loc.x < 0 || _loc.x > 1024 || _loc.y < 0 || _loc.y > 768);
-}
+//bool is_out_of_map(Point _loc)
+//{
+ //   return (_loc.x < 0 || _loc.x > 1024 || _loc.y < 0 || _loc.y > 768);
+//}
 
-void Spaceship::bullets_move()
+/*void Spaceship::bullets_move()
 {
     for (int i = 0; i < bullets.size(); i++)
     {
@@ -98,9 +98,9 @@ void Spaceship::bullets_move()
             bullets.erase(bullets.begin() + i);
             continue;
         }
-        bullets[i].move();
+        bullets[i].move(SPACESHIP_BULLET_SPEED);
     }
-}
+}*/
 
 void Spaceship::delete_bullet(int index)
 {

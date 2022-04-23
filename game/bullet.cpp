@@ -12,9 +12,9 @@ Bullet::Bullet(Point _loc)
     location = {_loc.x, _loc.y};
 }
 
-void Bullet::move()
+void Bullet::move(double speed)
 {
-    vy = BULLET_SPEED;
+    vy = speed;
     location.y += vy;
     body.x = location.x;
     body.y = location.y;

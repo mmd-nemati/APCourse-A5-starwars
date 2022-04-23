@@ -12,3 +12,15 @@ Enemy::Enemy(Point _loc)
     location = _loc;
     damage = ENEMY_DAMAGE;
 }
+
+void Enemy::shoot()
+{
+    Point weapon_location = {location.x + body.w, location.y};
+    Bullet new_bullet(weapon_location);
+    new_bullet.set_location(weapon_location);
+    bullets.push_back(new_bullet);
+}
+
+
+// stop bullet
+
