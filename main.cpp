@@ -4,12 +4,10 @@
 int main(int argc, char *argv[])
 {
     Game game(4);
-    bool game_running = true;
     game.create_enemies();
-    while(game_running)
+    while(game.get_status() == GAME_RUNNING)
     {
-        game_running = game.process_event();
-        game.render();
+        game.run();
     }
     return 0;
 }

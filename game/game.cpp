@@ -6,12 +6,20 @@ Game::Game(int r)
 {
     rounds = r;
     win = new Window(1024, 768);
-    game_status = GAME_STOPPED;
+    game_status = GAME_RUNNING;
     flag = false;
     //dir = 0;
     //spaceship = Spaceship(win);
 }
 
+void Game::run()
+{
+    spaceship.move();
+    spaceship.bullets_move();
+    process_enemy_hit();
+    process_event();
+    render();
+}
 void Game:: render()
 {
     win->clear();
@@ -58,14 +66,10 @@ bool Game:: process_event()
     Event new_event;
     int d;
     new_event = this->win->poll_for_event();
-    spaceship.move();
-    spaceship.bullets_move();
-    //std::cout << spaceship.get_bullets().size() << std::endl;
-    check_enemy_hit();
     switch(new_event.get_type())
     {
         case Event::QUIT:
-            return false;
+            game_status = GAME_STOPPED;
 
         case Event::KEY_PRESS:
         {
@@ -80,8 +84,6 @@ bool Game:: process_event()
                 spaceship.set_moving(RIGHT);
             if (pressed_key == ' ')
                 spaceship.shoot();
-                //std::cout << "yes" << std::endl;
-            //d = get_move_direction(new_event);
             break;
         }
         
@@ -107,7 +109,7 @@ void Game::create_enemies()
     enemies.push_back(Enemy(p3));
 }
 
-bool Game::objects_conflict(Rectangle b1, Rectangle b2)
+bool objects_conflict(Rectangle b1, Rectangle b2)
 {   
     Rectangle hitbox(b2.x - b1.w, b2.y - b1.h, b2.w + b1.w, b2.h + b1.h);
     return ((hitbox.x <= b1.x && 
@@ -117,19 +119,17 @@ bool Game::objects_conflict(Rectangle b1, Rectangle b2)
     
 }
 
-void Game::check_enemy_hit()
+void Game::process_enemy_hit()
 {
         int j = 0;
        // std::cout << "................" << std::endl;
         for (j = 0; j < enemies.size(); j++)
             //std::cout << j << std::endl;
             for (int i = 0; i < spaceship.get_bullets().size(); i++)
-            if (this->objects_conflict(spaceship.get_bullets()[i].get_body(),
+            if (objects_conflict(spaceship.get_bullets()[i].get_body(),
                 enemies[j].get_body()))
             { 
-                    std::cout << "SHOT" << std::endl;
                     spaceship.delete_bullet(i); 
-                    //std::cout << "DONE" << std::endl;
                     continue;           
             }
 }

@@ -18,8 +18,9 @@ class Game
         void handle_key_press(int dir);
         bool process_event();
         void create_enemies();
-        bool objects_conflict(Rectangle b1, Rectangle b2);
-        void check_enemy_hit();
+        void process_enemy_hit();
+        void delete_enemy(int index);
+        bool get_status() { return game_status; }       
     private:
         Window* win;
         int rounds;
