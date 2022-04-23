@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include <iostream>
+#include <vector>
 Game::Game(int r)
     : spaceship()
 {
@@ -20,9 +21,13 @@ void Game:: render()
     for (int i = 0; i < spaceship.get_bullets().size(); i++)
         win->draw_img("assets/photos/ship-bullet.png", 
         Rectangle(spaceship.get_bullets()[i].get_loc(), BULLET_SCALE, BULLET_SCALE));
-
         //win->draw_rect(spaceship.get_bullets()[i].get_body(), WHITE);
         //win->draw_img("assets/photos/ship-bullet.png", spaceship.get_bullets()[i].get_body());
+
+    for (int i = 0; i < enemies.size(); i++)
+        win->draw_img("assets/photos/enemy-ship.png", enemies[i].get_body());
+        //win->draw_rect(enemies[i].get_body(), RED);
+
     win->update_screen();
     delay(30);
 }
@@ -89,4 +94,13 @@ bool Game:: process_event()
     return true;
 }
 
-
+void Game::create_enemies()
+{
+    // this is a temp implementaion
+    Point p1 = {200, 50};
+    Point p2 = {400, 50};
+    Point p3 = {300, 100};
+    enemies.push_back(Enemy(p1));
+    enemies.push_back(Enemy(p2));
+    enemies.push_back(Enemy(p3));
+}

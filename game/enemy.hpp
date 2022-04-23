@@ -11,7 +11,9 @@ class Enemy
 {
     public:
         Enemy();
+        Enemy(Point _loc);
     
+        Rectangle get_body() { return body; }
     private:
         int health;
         Rectangle body;

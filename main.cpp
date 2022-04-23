@@ -7,6 +7,7 @@ int main(int argc, char *argv[])
     bool game_running = true;
     while(game_running)
     {
+        game.create_enemies();
         game_running = game.process_event();
         game.render();
     }

@@ -6,3 +6,11 @@ Enemy::Enemy()
     health = ENEMY_INITIAL_HEALTH;
     damage = ENEMY_DAMAGE;
 }
+
+Enemy::Enemy(Point _loc)
+ : body (_loc.x, _loc.y, 56, 80)
+{
+    location = _loc;
+    health = ENEMY_INITIAL_HEALTH;
+    damage = ENEMY_DAMAGE;
+}
