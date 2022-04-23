@@ -19,6 +19,7 @@ void Game::run()
     process_enemy_hit();
     process_event();
     render();
+    delay(30);
 }
 void Game:: render()
 {
@@ -37,7 +38,7 @@ void Game:: render()
         //win->draw_rect(enemies[i].get_body(), RED);
 
     win->update_screen();
-    delay(30);
+    
 }
 
 void Game::handle_key_press(int dir)
@@ -104,9 +105,13 @@ void Game::create_enemies()
     Point p1(700, 50);
     Point p2(400, 50);
     Point p3(300, 100);
+    Point p4(500, 200);
+    Point p5(654, 100);
     enemies.push_back(Enemy(p1));
     enemies.push_back(Enemy(p2));
     enemies.push_back(Enemy(p3));
+    enemies.push_back(Enemy(p4));
+    enemies.push_back(Enemy(p5));
 }
 
 bool objects_conflict(Rectangle b1, Rectangle b2)
@@ -136,3 +141,36 @@ void Game::delete_enemy(int index)
 {
     enemies.erase(enemies.begin() + index); 
 }
+
+/*bool is_out_of_map(Point _loc)
+{
+    return (_loc.x < 0 || _loc.x > 1024 || _loc.y < 0 || _loc.y > 768);
+}
+
+void Game::enemies_bullets_move()
+{
+    for (int i = 0; i < enemies.size(); i++)
+        bullets_move(enemies[i].get_bullets(), ENEMY_SHOOT);
+}
+
+void Game::bullets_move(std::vector<Bullet> bullets, int shooter)
+{
+    for (int i = 0; i < bullets.size(); i++)
+    {
+        if (is_out_of_map(bullets[i].get_loc()))
+        {
+            bullets.erase(bullets.begin() + i);
+            continue;
+        }
+        switch(shooter)
+        {
+            case SPACESHIP_SHOOT:
+                bullets[i].move(SPACESHIP_BULLET_SPEED);
+                break;
+            case ENEMY_SHOOT:
+                bullets[i].move(ENEMY_BULLET_SPEED);
+                break;
+        }
+    }
+}
+*/

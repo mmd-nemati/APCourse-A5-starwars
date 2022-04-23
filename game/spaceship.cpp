@@ -86,7 +86,7 @@ void Spaceship::shoot()
 
 bool is_out_of_map(Point _loc)
 {
-    return (_loc.x < 0 || _loc.x > 1024 || _loc.y < 0 || _loc.y > 768);
+  return (_loc.x < 0 || _loc.x > 1024 || _loc.y < 0 || _loc.y > 768);
 }
 
 void Spaceship::bullets_move()
@@ -98,7 +98,7 @@ void Spaceship::bullets_move()
             bullets.erase(bullets.begin() + i);
             continue;
         }
-        bullets[i].move();
+        bullets[i].move(SPACESHIP_BULLET_SPEED);
     }
 }
 
