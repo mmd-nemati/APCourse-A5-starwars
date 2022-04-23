@@ -21,6 +21,7 @@ class Spaceship
         void stop();
         void shoot();
         void bullets_move();
+        void delete_bullet(int index);
         Rectangle get_body() { return body; };
         
         void set_moving(int _dir);

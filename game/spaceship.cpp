@@ -101,3 +101,8 @@ void Spaceship::bullets_move()
         bullets[i].move();
     }
 }
+
+void Spaceship::delete_bullet(int index)
+{
+    bullets.erase(bullets.begin() + index);
+}

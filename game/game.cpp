@@ -60,6 +60,8 @@ bool Game:: process_event()
     new_event = this->win->poll_for_event();
     spaceship.move();
     spaceship.bullets_move();
+    //std::cout << spaceship.get_bullets().size() << std::endl;
+    check_enemy_hit();
     switch(new_event.get_type())
     {
         case Event::QUIT:
@@ -97,10 +99,37 @@ bool Game:: process_event()
 void Game::create_enemies()
 {
     // this is a temp implementaion
-    Point p1 = {200, 50};
-    Point p2 = {400, 50};
-    Point p3 = {300, 100};
+    Point p1(700, 50);
+    Point p2(400, 50);
+    Point p3(300, 100);
     enemies.push_back(Enemy(p1));
     enemies.push_back(Enemy(p2));
     enemies.push_back(Enemy(p3));
+}
+
+bool Game::objects_conflict(Rectangle b1, Rectangle b2)
+{   
+    Rectangle hitbox(b2.x - b1.w, b2.y - b1.h, b2.w + b1.w, b2.h + b1.h);
+    return ((hitbox.x <= b1.x && 
+            b1.x + b1.w <= hitbox.x + hitbox.w && 
+            hitbox.y <= b1.y && 
+            b1.y <= hitbox.y + hitbox.h));
+    
+}
+
+void Game::check_enemy_hit()
+{
+        int j = 0;
+       // std::cout << "................" << std::endl;
+        for (j = 0; j < enemies.size(); j++)
+            //std::cout << j << std::endl;
+            for (int i = 0; i < spaceship.get_bullets().size(); i++)
+            if (this->objects_conflict(spaceship.get_bullets()[i].get_body(),
+                enemies[j].get_body()))
+            { 
+                    std::cout << "SHOT" << std::endl;
+                    spaceship.delete_bullet(i); 
+                    //std::cout << "DONE" << std::endl;
+                    continue;           
+            }
 }

@@ -8,8 +8,10 @@ constexpr double BULLET_SPEED = -20;
 class Bullet
 {
     public:
+        Bullet();
         Bullet(Point _loc);
         void move();
+    
         void set_location(Point _loc);
         Point get_loc() { return location; }
         Rectangle get_body() { return body; }
