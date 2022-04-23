@@ -121,15 +121,18 @@ bool objects_conflict(Rectangle b1, Rectangle b2)
 
 void Game::process_enemy_hit()
 {
-        int j = 0;
-       // std::cout << "................" << std::endl;
-        for (j = 0; j < enemies.size(); j++)
-            //std::cout << j << std::endl;
-            for (int i = 0; i < spaceship.get_bullets().size(); i++)
-            if (objects_conflict(spaceship.get_bullets()[i].get_body(),
-                enemies[j].get_body()))
+    for (int i = 0; i < enemies.size(); i++)
+        for (int j = 0; j < spaceship.get_bullets().size(); j++)
+            if (objects_conflict(spaceship.get_bullets()[j].get_body(),
+                enemies[i].get_body()))
             { 
-                    spaceship.delete_bullet(i); 
-                    continue;           
+                spaceship.delete_bullet(j);
+                delete_enemy(i);
+                continue;           
             }
+}
+
+void Game::delete_enemy(int index)
+{
+    enemies.erase(enemies.begin() + index); 
 }
