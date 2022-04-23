@@ -15,11 +15,9 @@ Game::Game(int r)
 void Game::run()
 {
     spaceship.move();
-    bullets_move(spaceship.get_bullets(), SPACESHIP_SHOOT);
-    enemies_bullets_move();
+    spaceship.bullets_move();
     process_enemy_hit();
     process_event();
-    
     render();
     delay(30);
 }
@@ -144,7 +142,7 @@ void Game::delete_enemy(int index)
     enemies.erase(enemies.begin() + index); 
 }
 
-bool is_out_of_map(Point _loc)
+/*bool is_out_of_map(Point _loc)
 {
     return (_loc.x < 0 || _loc.x > 1024 || _loc.y < 0 || _loc.y > 768);
 }
@@ -168,6 +166,11 @@ void Game::bullets_move(std::vector<Bullet> bullets, int shooter)
         {
             case SPACESHIP_SHOOT:
                 bullets[i].move(SPACESHIP_BULLET_SPEED);
+                break;
+            case ENEMY_SHOOT:
+                bullets[i].move(ENEMY_BULLET_SPEED);
+                break;
         }
     }
 }
+*/
