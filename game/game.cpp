@@ -4,6 +4,7 @@
 Game::Game(int r)
     : spaceship()
 {
+    counter = 0;
     rounds = r;
     win = new Window(1024, 768);
     game_status = GAME_RUNNING;
@@ -14,10 +15,14 @@ Game::Game(int r)
 
 void Game::run()
 {
+    counter++;
     spaceship.move();
     spaceship.bullets_move();
     process_enemy_hit();
     move_enemies();
+    if (this->can_enemies_shoot())
+        enemies_shoot();
+    enemies_bullets_move();
     process_event();
     render();
     delay(30);
@@ -37,6 +42,10 @@ void Game:: render()
     for (int i = 0; i < enemies.size(); i++)
         win->draw_img("assets/photos/enemy-ship.png", enemies[i]->get_body());
         //win->draw_rect(enemies[i].get_body(), RED);
+    
+    for (int i = 0; i < enemies.size(); i++)
+        for (int j = 0; j < enemies[i]->get_bullets().size(); j++)
+            win->draw_rect(enemies[i]->get_bullets()[j].get_body(), GREEN);
 
     win->update_screen();
     
@@ -159,6 +168,20 @@ void Game::move_enemies()
 {
     for (int i = 0; i < enemies.size(); i++)
         enemies[i]->move();
+}
+
+bool Game::can_enemies_shoot()
+{
+    if (counter % 30 == 0)
+        return true;
+
+    return false;
+}
+
+void Game::enemies_shoot()
+{
+    for (int i = 0; i < enemies.size(); i++)
+        enemies[i]->shoot();
 }
 /*bool is_out_of_map(Point _loc)
 {

@@ -15,7 +15,7 @@ Enemy::Enemy(Point _loc)
 
 void Enemy::shoot()
 {
-    Point weapon_location = {location.x + body.w, location.y};
+    Point weapon_location = {location.x + body.w/2, location.y + body.h};
     Bullet new_bullet(weapon_location);
     new_bullet.set_location(weapon_location);
     bullets.push_back(new_bullet);
@@ -31,7 +31,7 @@ void Enemy::bullets_move()
             bullets.erase(bullets.begin() + i);
             continue;
         }
-        bullets[i].move(SPACESHIP_BULLET_SPEED);
+        bullets[i].move(ENEMY_BULLET_SPEED);
     }
 }
 // stop bullet

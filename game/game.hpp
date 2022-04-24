@@ -23,12 +23,15 @@ class Game
         void create_enemies();
         void process_enemy_hit();
         void delete_enemy(int index);
+        bool can_enemies_shoot();
+        void enemies_shoot();
         void enemy_bullets_move();
         void enemies_bullets_move();
         void move_enemies();
         bool get_status() { return game_status; }       
     private:
         Window* win;
+        int counter;
         int rounds;
         bool game_status;
         Spaceship spaceship;
