@@ -12,11 +12,12 @@ class Enemy
     public:
         Enemy();
         Enemy(Point _loc);
+        virtual void move();
         void shoot();
         void bullets_move();
         Rectangle get_body() { return body; }
         std::vector<Bullet> get_bullets() { return bullets; }
-    private:
+    protected:
         int health;
         Rectangle body;
         Point location;

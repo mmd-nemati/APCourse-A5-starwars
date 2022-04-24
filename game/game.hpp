@@ -3,6 +3,7 @@
 #include "../src/rsdl.hpp"
 #include "spaceship.hpp"
 #include "enemy.hpp"
+#include "movingenemy.hpp"
 #include <vector>
 constexpr int WINDOW_WIDTH = 1024;
 constexpr int WINDOW_HEIGHT = 768;
@@ -22,8 +23,9 @@ class Game
         void create_enemies();
         void process_enemy_hit();
         void delete_enemy(int index);
-        void bullets_move(std::vector<Bullet> bullets, int shooter);
+        void enemy_bullets_move();
         void enemies_bullets_move();
+        void move_enemies();
         bool get_status() { return game_status; }       
     private:
         Window* win;
@@ -31,7 +33,7 @@ class Game
         bool game_status;
         Spaceship spaceship;
         bool flag;
-        std::vector<Enemy> enemies;
+        std::vector<Enemy*> enemies;
        // int dir;
         //Event move_event;
 

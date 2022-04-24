@@ -11,6 +11,7 @@ class Bullet
         Bullet();
         Bullet(Point _loc);
         void move(double speed);
+        bool is_out_of_map();
     
         void set_location(Point _loc);
         Point get_loc() { return location; }

@@ -17,6 +17,7 @@ void Game::run()
     spaceship.move();
     spaceship.bullets_move();
     process_enemy_hit();
+    move_enemies();
     process_event();
     render();
     delay(30);
@@ -34,7 +35,7 @@ void Game:: render()
         //win->draw_img("assets/photos/ship-bullet.png", spaceship.get_bullets()[i].get_body());
 
     for (int i = 0; i < enemies.size(); i++)
-        win->draw_img("assets/photos/enemy-ship.png", enemies[i].get_body());
+        win->draw_img("assets/photos/enemy-ship.png", enemies[i]->get_body());
         //win->draw_rect(enemies[i].get_body(), RED);
 
     win->update_screen();
@@ -107,11 +108,22 @@ void Game::create_enemies()
     Point p3(300, 100);
     Point p4(500, 200);
     Point p5(654, 100);
-    enemies.push_back(Enemy(p1));
-    enemies.push_back(Enemy(p2));
-    enemies.push_back(Enemy(p3));
-    enemies.push_back(Enemy(p4));
-    enemies.push_back(Enemy(p5));
+    Point p6(200, 250);
+    Enemy* a = new Enemy(p1);
+    Enemy* b = new Enemy(p2);
+    Enemy* c = new Enemy(p3);
+    Enemy* d = new Enemy(p4);
+    enemies.push_back(a);
+    enemies.push_back(b);
+    enemies.push_back(c);
+    enemies.push_back(d);
+   // enemies.push_back(Enemy(p1));
+    //enemies.push_back(Enemy(p2));
+    //enemies.push_back(Enemy(p3));
+    //enemies.push_back(Enemy(p4));
+    //enemies.push_back(Enemy(p5));
+    MovingEnemy* s = new  MovingEnemy(p6);
+    enemies.push_back(s);
 }
 
 bool objects_conflict(Rectangle b1, Rectangle b2)
@@ -129,7 +141,7 @@ void Game::process_enemy_hit()
     for (int i = 0; i < enemies.size(); i++)
         for (int j = 0; j < spaceship.get_bullets().size(); j++)
             if (objects_conflict(spaceship.get_bullets()[j].get_body(),
-                enemies[i].get_body()))
+                enemies[i]->get_body()))
             { 
                 spaceship.delete_bullet(j);
                 delete_enemy(i);
@@ -142,17 +154,23 @@ void Game::delete_enemy(int index)
     enemies.erase(enemies.begin() + index); 
 }
 
+
+void Game::move_enemies()
+{
+    for (int i = 0; i < enemies.size(); i++)
+        enemies[i]->move();
+}
 /*bool is_out_of_map(Point _loc)
 {
     return (_loc.x < 0 || _loc.x > 1024 || _loc.y < 0 || _loc.y > 768);
-}
+}*/
 
 void Game::enemies_bullets_move()
 {
     for (int i = 0; i < enemies.size(); i++)
-        bullets_move(enemies[i].get_bullets(), ENEMY_SHOOT);
+        enemies[i]->bullets_move();
 }
-
+/*
 void Game::bullets_move(std::vector<Bullet> bullets, int shooter)
 {
     for (int i = 0; i < bullets.size(); i++)

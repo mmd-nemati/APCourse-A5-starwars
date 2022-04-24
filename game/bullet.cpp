@@ -24,3 +24,9 @@ void Bullet::set_location(Point _loc)
 {
     location = _loc;
 }
+
+bool Bullet::is_out_of_map()
+{
+      return (this->location.x < 0 || this->location.x > 1024 || this->location.y < 0 || this->location.y > 768);
+
+}

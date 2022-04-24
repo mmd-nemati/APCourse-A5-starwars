@@ -22,5 +22,22 @@ void Enemy::shoot()
 }
 
 
+void Enemy::bullets_move()
+{
+    for (int i = 0; i < bullets.size(); i++)
+    {
+        if (bullets[i].is_out_of_map())
+        {
+            bullets.erase(bullets.begin() + i);
+            continue;
+        }
+        bullets[i].move(SPACESHIP_BULLET_SPEED);
+    }
+}
 // stop bullet
 
+void Enemy::move()
+{
+    //std::cout << "Moving" << std::endl;
+    return;
+}
