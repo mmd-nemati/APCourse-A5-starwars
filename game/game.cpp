@@ -45,7 +45,8 @@ void Game:: render()
     
     for (int i = 0; i < enemies.size(); i++)
         for (int j = 0; j < enemies[i]->get_bullets().size(); j++)
-            win->draw_rect(enemies[i]->get_bullets()[j].get_body(), GREEN);
+            win->draw_img("assets/photos/enemy-bullet.png", enemies[i]->get_bullets()[j].get_body());;
+            //win->draw_rect(enemies[i]->get_bullets()[j].get_body(), GREEN);
 
     win->update_screen();
     
@@ -172,7 +173,7 @@ void Game::move_enemies()
 
 bool Game::can_enemies_shoot()
 {
-    if (counter % 30 == 0)
+    if (counter % 30 == 0 || counter % 30 == 4)
         return true;
 
     return false;

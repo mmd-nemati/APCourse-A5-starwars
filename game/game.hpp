@@ -31,6 +31,7 @@ class Game
         bool get_status() { return game_status; }       
     private:
         Window* win;
+        int wc;
         int counter;
         int rounds;
         bool game_status;
