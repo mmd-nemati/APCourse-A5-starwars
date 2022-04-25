@@ -27,6 +27,8 @@ class Game
         void enemies_shoot();
         void enemies_bullets_move();
         void enemies_bullets_hit();
+        void spaceship_touch_others();
+        void spaceship_touch_enemy();
         void move_enemies();
         bool get_status() { return game_status; }       
     private:

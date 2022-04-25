@@ -23,7 +23,8 @@ void Game::run()
     if (this->can_enemies_shoot())
         enemies_shoot();
     enemies_bullets_move();
-    enemies_bullets_hit();
+    //enemies_bullets_hit();
+    spaceship_touch_others();
     process_event();
     render();
     delay(30);
@@ -198,35 +199,23 @@ void Game::enemies_bullets_hit()
             if (objects_conflict(spaceship.get_body(), enemies[i]->get_bullets()[j].get_body()))
             {    
                 // implement lose function
-                //std::cout << "LOSE" << std::endl;
+                std::cout << "LOSE" << std::endl;
                 enemies[i]->delete_bullet(j);
                 continue;
             }
 }
-/*bool is_out_of_map(Point _loc)
-{
-    return (_loc.x < 0 || _loc.x > 1024 || _loc.y < 0 || _loc.y > 768);
-}*/
 
-/*
-void Game::bullets_move(std::vector<Bullet> bullets, int shooter)
+void Game::spaceship_touch_enemy()
 {
-    for (int i = 0; i < bullets.size(); i++)
-    {
-        if (is_out_of_map(bullets[i].get_loc()))
-        {
-            bullets.erase(bullets.begin() + i);
-            continue;
-        }
-        switch(shooter)
-        {
-            case SPACESHIP_SHOOT:
-                bullets[i].move(SPACESHIP_BULLET_SPEED);
-                break;
-            case ENEMY_SHOOT:
-                bullets[i].move(ENEMY_BULLET_SPEED);
-                break;
-        }
-    }
+    for (int i = 0; i < enemies.size(); i++)
+        if (objects_conflict(spaceship.get_body(), enemies[i]->get_body()))
+                // implement lose function
+            std::cout << "TOuch" << std::endl;
 }
-*/
+
+void Game::spaceship_touch_others()
+{
+    // hit hostages
+    this->enemies_bullets_hit();
+    this->spaceship_touch_enemy();
+}
