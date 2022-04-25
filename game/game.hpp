@@ -25,8 +25,8 @@ class Game
         void delete_enemy(int index);
         bool can_enemies_shoot();
         void enemies_shoot();
-        void enemy_bullets_move();
         void enemies_bullets_move();
+        void enemies_bullets_hit();
         void move_enemies();
         bool get_status() { return game_status; }       
     private:

@@ -15,6 +15,7 @@ class Enemy
         virtual void move();
         void shoot();
         void bullets_move();
+        void delete_bullet(int index);
         Rectangle get_body() { return body; }
         std::vector<Bullet> get_bullets() { return bullets; }
     protected:

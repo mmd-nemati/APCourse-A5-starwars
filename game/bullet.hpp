@@ -4,7 +4,7 @@
 
 constexpr int BULLET_SCALE = 18;
 constexpr double SPACESHIP_BULLET_SPEED = -20;
-constexpr double ENEMY_BULLET_SPEED = 20;
+constexpr double ENEMY_BULLET_SPEED = 15;
 class Bullet
 {
     public:
