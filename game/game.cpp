@@ -42,12 +42,12 @@ void Game:: render()
         //win->draw_img("assets/photos/ship-bullet.png", spaceship.get_bullets()[i].get_body());
 
     for (int i = 0; i < enemies.size(); i++)
-        win->draw_img("assets/photos/enemy-ship.png", enemies[i]->get_body());
+        win->draw_img("assets/photos/enemy-ship2.png", enemies[i]->get_body());
         //win->draw_rect(enemies[i].get_body(), RED);
     
     for (int i = 0; i < enemies.size(); i++)
         for (int j = 0; j < enemies[i]->get_bullets().size(); j++)
-            win->draw_img("assets/photos/enemy-bullet.png", enemies[i]->get_bullets()[j].get_body());;
+            win->draw_img("assets/photos/enemy-bullet2.png", enemies[i]->get_bullets()[j].get_body());;
             //win->draw_rect(enemies[i]->get_bullets()[j].get_body(), GREEN);
 
     win->update_screen();
@@ -175,7 +175,7 @@ void Game::move_enemies()
 
 bool Game::can_enemies_shoot()
 {
-    if (counter % 30 == 0 || counter % 30 == 4)
+    if (counter % 40 == 1 || counter % 40 == 5)
         return true;
 
     return false;
