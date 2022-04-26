@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "general.hpp"
 #include <iostream>
 #include <vector>
 Game::Game(int r)
@@ -138,15 +139,7 @@ void Game::create_enemies()
     enemies.push_back(s);
 }
 
-bool objects_conflict(Rectangle b1, Rectangle b2)
-{   
-    Rectangle hitbox(b2.x - b1.w, b2.y - b1.h, b2.w + b1.w, b2.h + b1.h);
-    return ((hitbox.x <= b1.x && 
-            b1.x <= hitbox.x + hitbox.w && 
-            hitbox.y <= b1.y && 
-            b1.y <= hitbox.y + hitbox.h));
-    
-}
+
 
 void Game::process_enemy_hit()
 {
@@ -195,14 +188,7 @@ void Game::enemies_bullets_move()
 void Game::enemies_bullets_hit()
 {
     for (int i = 0; i < enemies.size(); i++)
-        for (int j = 0; j < enemies[i]->get_bullets().size(); j++)
-            if (objects_conflict(spaceship.get_body(), enemies[i]->get_bullets()[j].get_body()))
-            {    
-                // implement lose function
-                std::cout << "LOSE" << std::endl;
-                enemies[i]->delete_bullet(j);
-                continue;
-            }
+        enemies[i]->hit_spaceship(spaceship.get_body());
 }
 
 void Game::spaceship_touch_enemy()

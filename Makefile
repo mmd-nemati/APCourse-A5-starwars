@@ -3,11 +3,14 @@ CCFLAGS += -l SDL2 -l SDL2_image -l SDL2_ttf -l SDL2_mixer
 
 all: starwars.out
 
-starwars.out: rsdl.o game.o spaceship.o bullet.o enemy.o movingenemy.o main.o 
-	$(CC) main.o rsdl.o game.o spaceship.o bullet.o enemy.o movingenemy.o $(CCFLAGS) -o starwars.out
+starwars.out: rsdl.o general.o game.o spaceship.o bullet.o enemy.o movingenemy.o main.o 
+	$(CC) main.o rsdl.o general.o game.o spaceship.o bullet.o enemy.o movingenemy.o $(CCFLAGS) -o starwars.out
 
 rsdl.o: src/rsdl.hpp src/rsdl.cpp
 	$(CC) -c src/rsdl.cpp -o rsdl.o
+
+general.o: src/rsdl.hpp game/general.hpp game/general.cpp
+	${CC} -c game/general.cpp -o general.o
 
 game.o: src/rsdl.hpp game/game.hpp game/spaceship.hpp game/game.cpp
 	${CC} -c game/game.cpp -o game.o
