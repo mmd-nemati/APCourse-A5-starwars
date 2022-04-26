@@ -194,9 +194,7 @@ void Game::enemies_bullets_hit()
 void Game::spaceship_touch_enemy()
 {
     for (int i = 0; i < enemies.size(); i++)
-        if (objects_conflict(spaceship.get_body(), enemies[i]->get_body()))
-                // implement lose function
-            std::cout << "TOuch" << std::endl;
+        spaceship.touch_enemy(enemies[i]);
 }
 
 void Game::spaceship_touch_others()

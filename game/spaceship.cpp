@@ -1,6 +1,6 @@
 #include "../src/rsdl.hpp"
 #include "spaceship.hpp"
-
+#include "general.hpp"
 Spaceship::Spaceship()
   :  body(462, 768-SPACESHIP_HEIGHT, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
 {
@@ -105,4 +105,12 @@ void Spaceship::bullets_move()
 void Spaceship::delete_bullet(int index)
 {
     bullets.erase(bullets.begin() + index);
+}
+
+void Spaceship::touch_enemy( Enemy* enemy)
+{
+    if (objects_conflict(this->body, enemy->get_body()))
+        // implement lose function    
+        std::cout << "TOuch" << std::endl;
+    return;
 }

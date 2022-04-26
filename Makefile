@@ -15,7 +15,7 @@ general.o: src/rsdl.hpp game/general.hpp game/general.cpp
 game.o: src/rsdl.hpp game/game.hpp game/spaceship.hpp game/game.cpp
 	${CC} -c game/game.cpp -o game.o
 
-spaceship.o: src/rsdl.hpp game/bullet.hpp game/spaceship.hpp game/spaceship.cpp
+spaceship.o: src/rsdl.hpp game/enemy.hpp game/bullet.hpp game/spaceship.hpp game/spaceship.cpp
 	${CC} -c game/spaceship.cpp -o spaceship.o
 
 bullet.o: src/rsdl.hpp game/bullet.hpp game/bullet.cpp

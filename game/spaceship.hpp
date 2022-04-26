@@ -1,6 +1,7 @@
 #ifndef __SPACESHIP_H__
 #define __SPACESHIP_H__
 #include "../src/rsdl.hpp"
+#include "enemy.hpp"
 #include "bullet.hpp"
 #include <vector>
 constexpr int SPACESHIP_HEIGHT = 125;
@@ -22,6 +23,7 @@ class Spaceship
         void shoot();
         void bullets_move();
         void delete_bullet(int index);
+        void touch_enemy( Enemy *enemy);
         Rectangle get_body() { return body; };
         
         void set_moving(int _dir);
