@@ -21,12 +21,12 @@ class Game
         void handle_key_press(int dir);
         bool process_event();
         void create_enemies();
-        void process_enemy_hit();
+        void spaceship_hit_enemy();
+        void enemies_hit_spaceship();
         void delete_enemy(int index);
         bool can_enemies_shoot();
         void enemies_shoot();
         void enemies_bullets_move();
-        void enemies_bullets_hit();
         void spaceship_touch_others();
         void spaceship_touch_enemy();
         void move_enemies();

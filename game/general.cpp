@@ -9,3 +9,8 @@ bool objects_conflict(Rectangle b1, Rectangle b2)
             b1.y <= hitbox.y + hitbox.h));
     
 }
+
+void win_or_lose_check(int status)
+{
+    
+}

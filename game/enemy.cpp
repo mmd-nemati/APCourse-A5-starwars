@@ -46,14 +46,3 @@ void Enemy::move()
     //std::cout << "Moving" << std::endl;
     return;
 }
-
-void Enemy::hit_spaceship(Rectangle spaceship_body)
-{
-    for (int i = 0; i < bullets.size(); i++)
-        if (objects_conflict(spaceship_body, bullets[i].get_body()))
-        {   
-             std::cout << "SHOT" << std::endl;
-            this->delete_bullet(i);
-        }
-
-}

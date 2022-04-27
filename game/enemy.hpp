@@ -2,6 +2,7 @@
 #define __ENEMY_H__
 #include "../src/rsdl.hpp"
 #include "bullet.hpp"
+//#include "spaceship.hpp"
 #include "general.hpp"
 #include <vector>
 
@@ -16,7 +17,6 @@ class Enemy
         virtual void move();
         void shoot();
         void bullets_move();
-        void hit_spaceship(Rectangle spaceship_body);
         void delete_bullet(int index);
         Rectangle get_body() { return body; }
         std::vector<Bullet> get_bullets() { return bullets; }

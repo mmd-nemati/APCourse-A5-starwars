@@ -10,6 +10,7 @@ Spaceship::Spaceship()
     ax = MOVING_VELOCITY;
     ay = MOVING_VELOCITY;
     is_moving = false;
+    result = NO_RESULT;
     //body = Rectangle(location.x, location.y);
 }
 
@@ -113,4 +114,14 @@ void Spaceship::touch_enemy( Enemy* enemy)
         // implement lose function    
         std::cout << "TOuch" << std::endl;
     return;
+}
+
+void Spaceship::win()
+{
+    result = WIN;
+}
+
+void Spaceship::lose()
+{
+    result = LOSE;
 }

@@ -19,12 +19,12 @@ void Game::run()
     counter++;
     spaceship.move();
     spaceship.bullets_move();
-    process_enemy_hit();
+    spaceship_hit_enemy();
     move_enemies();
     if (this->can_enemies_shoot())
         enemies_shoot();
     enemies_bullets_move();
-    //enemies_bullets_hit();
+    //enemies_hit_spaceship();
     spaceship_touch_others();
     process_event();
     render();
@@ -141,7 +141,7 @@ void Game::create_enemies()
 
 
 
-void Game::process_enemy_hit()
+void Game::spaceship_hit_enemy()
 {
     for (int i = 0; i < enemies.size(); i++)
         for (int j = 0; j < spaceship.get_bullets().size(); j++)
@@ -154,6 +154,19 @@ void Game::process_enemy_hit()
             }
 }
 
+void Game::enemies_hit_spaceship()
+{
+    for (int i = 0; i < enemies.size(); i++)
+        for (int j = 0; j < enemies[i]->get_bullets().size(); j++)
+            if (objects_conflict(spaceship.get_body(),
+                enemies[i]->get_bullets()[j].get_body()))
+            {   
+                std::cout << "SHOT" << std::endl;
+                enemies[i]->delete_bullet(j);
+                spaceship.lose();
+                continue;
+            }
+} 
 void Game::delete_enemy(int index)
 {
     enemies.erase(enemies.begin() + index); 
@@ -185,11 +198,6 @@ void Game::enemies_bullets_move()
         enemies[i]->bullets_move();
 }
 
-void Game::enemies_bullets_hit()
-{
-    for (int i = 0; i < enemies.size(); i++)
-        enemies[i]->hit_spaceship(spaceship.get_body());
-}
 
 void Game::spaceship_touch_enemy()
 {
@@ -200,6 +208,6 @@ void Game::spaceship_touch_enemy()
 void Game::spaceship_touch_others()
 {
     // hit hostages
-    this->enemies_bullets_hit();
+    this->enemies_hit_spaceship();
     this->spaceship_touch_enemy();
 }
