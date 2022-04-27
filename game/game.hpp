@@ -26,12 +26,14 @@ class Game
         void create_enemies();
         void spaceship_hit_enemy();
         void enemies_hit_spaceship();
+        void spaceship_hit_hostage();
         void delete_enemy(int index);
         bool can_enemies_shoot();
         void enemies_shoot();
         void enemies_bullets_move();
         void spaceship_touch_others();
         void spaceship_touch_enemy();
+        void spaceship_touch_hostage();
         void move_enemies();
         void player_lose();
         void player_win();
@@ -44,6 +46,7 @@ class Game
         bool game_status;
         Spaceship spaceship;
         std::vector<Enemy*> enemies;
+        std::vector<Hostage*> hostages;
         int result;
 };
 #endif

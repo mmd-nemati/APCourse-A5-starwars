@@ -137,8 +137,6 @@ void Game::create_enemies()
     enemies.push_back(s);
 }
 
-
-
 void Game::spaceship_hit_enemy()
 {
     for (int i = 0; i < enemies.size(); i++)
@@ -165,10 +163,26 @@ void Game::enemies_hit_spaceship()
             }
 }
 
+void Game::spaceship_hit_hostage()
+{
+    for (int i = 0; i < hostages.size(); i++)
+        for (int j = 0; j < spaceship.get_bullets().size(); j++)
+            if (objects_conflict(spaceship.get_bullets()[j].get_body(), 
+                hostages[i]->get_body()))
+                    player_lose();
+}
+
 void Game::spaceship_touch_enemy()
 {
     for (int i = 0; i < enemies.size(); i++)
         if (objects_conflict(spaceship.get_body(), enemies[i]->get_body()))
+            player_lose();
+}
+
+void Game::spaceship_touch_hostage()
+{
+    for (int i = 0; i < hostages.size(); i++)
+        if (objects_conflict(spaceship.get_body(), hostages[i]->get_body()))
             player_lose();
 }
 
