@@ -4,6 +4,7 @@
 #include "spaceship.hpp"
 #include "enemy.hpp"
 #include "movingenemy.hpp"
+#include "hostage.hpp"
 #include <vector>
 constexpr int WINDOW_WIDTH = 1024;
 constexpr int WINDOW_HEIGHT = 768;
