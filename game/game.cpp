@@ -19,6 +19,7 @@ void Game::run()
     spaceship.move();
     spaceship.bullets_move();
     spaceship_hit_enemy();
+    spaceship_hit_hostage();
     move_enemies();
     if (this->can_enemies_shoot())
         enemies_shoot();
@@ -48,6 +49,10 @@ void Game:: render()
         for (int j = 0; j < enemies[i]->get_bullets().size(); j++)
             win->draw_img("assets/photos/enemy-bullet2.png", enemies[i]->get_bullets()[j].get_body());;
             //win->draw_rect(enemies[i]->get_bullets()[j].get_body(), GREEN);
+
+    for (int i = 0; i < hostages.size(); i++)
+        win->draw_img("assets/photos/hostage.png", hostages[i]->get_body());
+        //win->draw_rect(hostages[i]->get_body());
 
     win->update_screen();
     
@@ -120,6 +125,8 @@ void Game::create_enemies()
     Point p4(500, 200);
     Point p5(654, 100);
     Point p6(200, 250);
+    Point p7(600, 80);
+    Point p8(100, 300);
     Enemy* a = new Enemy(p1);
     Enemy* b = new Enemy(p2);
     Enemy* c = new Enemy(p3);
@@ -135,6 +142,11 @@ void Game::create_enemies()
     //enemies.push_back(Enemy(p5));
     MovingEnemy* s = new  MovingEnemy(p6);
     enemies.push_back(s);
+
+    Hostage* h = new Hostage(p7);
+    Hostage* k = new Hostage(p8);
+    hostages.push_back(h);
+    hostages.push_back(k);
 }
 
 void Game::spaceship_hit_enemy()
