@@ -211,7 +211,7 @@ void Game::move_enemies()
 
 bool Game::can_enemies_shoot()
 {
-    if (counter % 40 == 1 || counter % 40 == 5)
+    if (counter % 50 == 1 || counter % 50 == 5)
         return true;
 
     return false;
@@ -235,6 +235,7 @@ void Game::spaceship_touch_others()
     // hit hostages
     this->enemies_hit_spaceship();
     this->spaceship_touch_enemy();
+    this->spaceship_touch_hostage();
 }
 
 void Game::player_lose()

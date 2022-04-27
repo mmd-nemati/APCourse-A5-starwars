@@ -4,8 +4,8 @@
 #include "enemy.hpp"
 #include "bullet.hpp"
 #include <vector>
-constexpr int SPACESHIP_HEIGHT = 125;
-constexpr int SPACESHIP_WIDTH = 69;
+constexpr int SPACESHIP_HEIGHT = 90;
+constexpr int SPACESHIP_WIDTH = 50;
 constexpr double INITIAL_VELOCITY = 0;
 constexpr double MOVING_VELOCITY = 20;
 constexpr int UP = 1;
