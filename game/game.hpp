@@ -27,7 +27,7 @@ class Game
         void spaceship_hit_enemy();
         void enemies_hit_spaceship();
         void spaceship_hit_hostage();
-        void delete_enemy(int index);
+        void kill_enemy(int index);
         bool can_enemies_shoot();
         void enemies_shoot();
         void enemies_bullets_move();

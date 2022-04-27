@@ -42,7 +42,8 @@ void Game:: render()
         //win->draw_img("assets/photos/ship-bullet.png", spaceship.get_bullets()[i].get_body());
 
     for (int i = 0; i < enemies.size(); i++)
-        win->draw_img("assets/photos/enemy-ship2.png", enemies[i]->get_body());
+        if (enemies[i]->is_alive())
+            win->draw_img("assets/photos/enemy-ship2.png", enemies[i]->get_body());
         //win->draw_rect(enemies[i].get_body(), RED);
     
     for (int i = 0; i < enemies.size(); i++)
@@ -154,10 +155,10 @@ void Game::spaceship_hit_enemy()
     for (int i = 0; i < enemies.size(); i++)
         for (int j = 0; j < spaceship.get_bullets().size(); j++)
             if (objects_conflict(spaceship.get_bullets()[j].get_body(),
-                enemies[i]->get_body()))
+                enemies[i]->get_body()) && enemies[i]->is_alive())
             { 
                 spaceship.delete_bullet(j);
-                delete_enemy(i);
+                kill_enemy(i);
                 continue;           
             }
 }
@@ -187,7 +188,7 @@ void Game::spaceship_hit_hostage()
 void Game::spaceship_touch_enemy()
 {
     for (int i = 0; i < enemies.size(); i++)
-        if (objects_conflict(spaceship.get_body(), enemies[i]->get_body()))
+        if (objects_conflict(spaceship.get_body(), enemies[i]->get_body()) && enemies[i]->is_alive())
             player_lose();
 }
 
@@ -198,15 +199,16 @@ void Game::spaceship_touch_hostage()
             player_lose();
 }
 
-void Game::delete_enemy(int index)
+void Game::kill_enemy(int index)
 {
-    enemies.erase(enemies.begin() + index); 
+    enemies[index]->die();
 }
 
 void Game::move_enemies()
 {
     for (int i = 0; i < enemies.size(); i++)
-        enemies[i]->move();
+        if (enemies[i]->is_alive())
+            enemies[i]->move();
 }
 
 bool Game::can_enemies_shoot()
@@ -220,7 +222,8 @@ bool Game::can_enemies_shoot()
 void Game::enemies_shoot()
 {
     for (int i = 0; i < enemies.size(); i++)
-        enemies[i]->shoot();
+        if (enemies[i]->is_alive())
+            enemies[i]->shoot();
 }
 
 void Game::enemies_bullets_move()

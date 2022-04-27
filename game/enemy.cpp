@@ -3,14 +3,14 @@
 Enemy::Enemy()
  :  body(0, 0, ENENMY_SCALE, ENENMY_SCALE)
 {
-    damage = ENEMY_DAMAGE;
+    status = ALIVE;
 }
 
 Enemy::Enemy(Point _loc)
  : body(_loc.x, _loc.y, 56, 80)
 {
     location = _loc;
-    damage = ENEMY_DAMAGE;
+    status = ALIVE;
 }
 
 void Enemy::shoot()
@@ -21,7 +21,15 @@ void Enemy::shoot()
     bullets.push_back(new_bullet);
 }
 
+void Enemy::die()
+{
+    status = DEAD;
+}
 
+bool Enemy::is_alive()
+{
+    return (status == ALIVE);
+}
 void Enemy::bullets_move()
 {
     for (int i = 0; i < bullets.size(); i++)

@@ -9,6 +9,8 @@
 constexpr int ENEMY_INITIAL_HEALTH = 100;
 constexpr int ENEMY_DAMAGE = 20;
 constexpr int ENENMY_SCALE = 45;
+constexpr int ALIVE = true;
+constexpr bool DEAD = false;
 class Enemy
 {
     public:
@@ -17,15 +19,16 @@ class Enemy
         virtual void move();
         void shoot();
         void bullets_move();
+        void die();
+        bool is_alive();
         void delete_bullet(int index);
         Rectangle get_body() { return body; }
         std::vector<Bullet> get_bullets() { return bullets; }
     protected:
-        int health;
+        bool status;
         Rectangle body;
         Point location;
         std::vector<Bullet> bullets;
-        int damage;
 };
 
 
