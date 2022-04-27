@@ -1,10 +1,12 @@
 CC := g++ -std=c++11
 CCFLAGS += -l SDL2 -l SDL2_image -l SDL2_ttf -l SDL2_mixer
+OBJECTS := rsdl.o general.o game.o spaceship.o bullet.o enemy.o movingenemy.o hostage.o main.o
+EXECUTABLE := starwars.out
 
-all: starwars.out
+all: ${EXECUTABLE}
 
-starwars.out: rsdl.o general.o game.o spaceship.o bullet.o enemy.o movingenemy.o hostage.o main.o 
-	$(CC) main.o rsdl.o general.o game.o spaceship.o bullet.o enemy.o movingenemy.o hostage.o $(CCFLAGS) -o starwars.out
+${EXECUTABLE}: ${OBJECTS}
+	$(CC) ${OBJECTS} $(CCFLAGS) -o ${EXECUTABLE}
 
 rsdl.o: src/rsdl.hpp src/rsdl.cpp
 	$(CC) -c src/rsdl.cpp -o rsdl.o
