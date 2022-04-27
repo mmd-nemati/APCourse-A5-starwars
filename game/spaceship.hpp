@@ -12,9 +12,7 @@ constexpr int UP = 1;
 constexpr int DOWN = 2;
 constexpr int LEFT = 3;
 constexpr int RIGHT = 4;
-constexpr int NO_RESULT = 0;
-constexpr int WIN = 1;
-constexpr int LOSE = 2;
+
 class Spaceship 
 {
     public:

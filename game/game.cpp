@@ -9,13 +9,12 @@ Game::Game(int r)
     rounds = r;
     win = new Window(1024, 768);
     game_status = GAME_RUNNING;
-    flag = false;
-    //dir = 0;
-    //spaceship = Spaceship(win);
+    result = NO_RESULT;
 }
 
 void Game::run()
 {
+    render();
     counter++;
     spaceship.move();
     spaceship.bullets_move();
@@ -27,7 +26,6 @@ void Game::run()
     //enemies_hit_spaceship();
     spaceship_touch_others();
     process_event();
-    render();
     delay(30);
 }
 void Game:: render()
@@ -84,7 +82,7 @@ bool Game:: process_event()
     switch(new_event.get_type())
     {
         case Event::QUIT:
-            game_status = GAME_STOPPED;
+            exit(0);
 
         case Event::KEY_PRESS:
         {
@@ -161,17 +159,23 @@ void Game::enemies_hit_spaceship()
             if (objects_conflict(spaceship.get_body(),
                 enemies[i]->get_bullets()[j].get_body()))
             {   
-                std::cout << "SHOT" << std::endl;
                 enemies[i]->delete_bullet(j);
-                spaceship.lose();
+                player_lose();
                 continue;
             }
-} 
+}
+
+void Game::spaceship_touch_enemy()
+{
+    for (int i = 0; i < enemies.size(); i++)
+        if (objects_conflict(spaceship.get_body(), enemies[i]->get_body()))
+            player_lose();
+}
+
 void Game::delete_enemy(int index)
 {
     enemies.erase(enemies.begin() + index); 
 }
-
 
 void Game::move_enemies()
 {
@@ -192,6 +196,7 @@ void Game::enemies_shoot()
     for (int i = 0; i < enemies.size(); i++)
         enemies[i]->shoot();
 }
+
 void Game::enemies_bullets_move()
 {
     for (int i = 0; i < enemies.size(); i++)
@@ -199,15 +204,42 @@ void Game::enemies_bullets_move()
 }
 
 
-void Game::spaceship_touch_enemy()
-{
-    for (int i = 0; i < enemies.size(); i++)
-        spaceship.touch_enemy(enemies[i]);
-}
-
 void Game::spaceship_touch_others()
 {
     // hit hostages
     this->enemies_hit_spaceship();
     this->spaceship_touch_enemy();
+}
+
+void Game::player_lose()
+{
+    result = LOSE;
+}
+
+void Game::player_win()
+{
+    result = WIN;
+}
+
+void Game::end()
+{
+    while(true)
+    {
+        switch(result)
+        {   
+            case LOSE:   
+                win->draw_img("assets/photos/back.png");
+                win->show_text("game over you stupid fucking donkey!", Point(150, 300), WHITE, "assets/fonts/FreeSans.ttf", 45);
+                break;
+            
+            case WIN:
+                win->draw_img("assets/photos/back.png");
+                win->show_text("The stupid wins!", Point(150, 300), WHITE, "assets/fonts/FreeSans.ttf", 45);
+                break;
+        }     
+
+        win->update_screen();
+        process_event();
+        delay(50);
+    }
 }

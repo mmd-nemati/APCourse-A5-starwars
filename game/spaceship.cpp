@@ -10,7 +10,7 @@ Spaceship::Spaceship()
     ax = MOVING_VELOCITY;
     ay = MOVING_VELOCITY;
     is_moving = false;
-    result = NO_RESULT;
+    //result = NO_RESULT;
     //body = Rectangle(location.x, location.y);
 }
 
@@ -116,7 +116,7 @@ void Spaceship::touch_enemy( Enemy* enemy)
     return;
 }
 
-void Spaceship::win()
+/*void Spaceship::win()
 {
     result = WIN;
 }
@@ -124,4 +124,4 @@ void Spaceship::win()
 void Spaceship::lose()
 {
     result = LOSE;
-}
+}*/

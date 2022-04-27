@@ -5,9 +5,10 @@ int main(int argc, char *argv[])
 {
     Game game(4);
     game.create_enemies();
-    while(game.get_status() == GAME_RUNNING)
+    while(game.get_result() == NO_RESULT)
     {
         game.run();
     }
+    game.end();
     return 0;
 }

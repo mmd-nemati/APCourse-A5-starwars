@@ -11,7 +11,9 @@ constexpr bool GAME_RUNNING = true;
 constexpr bool GAME_STOPPED = false;
 constexpr int SPACESHIP_SHOOT = 1;
 constexpr int ENEMY_SHOOT = 2;
-
+constexpr int NO_RESULT = 0;
+constexpr int WIN = 1;
+constexpr int LOSE = 2;
 class Game
 {
     public: 
@@ -30,18 +32,17 @@ class Game
         void spaceship_touch_others();
         void spaceship_touch_enemy();
         void move_enemies();
-        bool get_status() { return game_status; }       
+        void player_lose();
+        void player_win();
+        void end();
+        bool get_result() { return result; }       
     private:
         Window* win;
-        int wc;
         int counter;
         int rounds;
         bool game_status;
         Spaceship spaceship;
-        bool flag;
         std::vector<Enemy*> enemies;
-       // int dir;
-        //Event move_event;
-
+        int result;
 };
 #endif
