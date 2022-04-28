@@ -5,15 +5,18 @@
 #include <vector>
 #include <string>
 const std::string ROUNDS_MAP_DELIMITER = "#";
+const std::string ENEMY_MAP = "E";
+const std::string MOVING_ENEMY_MAP = "M";
+const std::string HOSTAGE_MAP = "H";
 class Map
 {
     public:
         Map(const std::string map_file_name);
 
-        void read_map();
-        
+        void parse_map();
+        std::vector<std::string> get_lines() { return lines; }
     private:
+        std::vector<std::string> lines;
         std::ifstream map_file;
-        std::vector<std::string> map_lines;
 };
 #endif

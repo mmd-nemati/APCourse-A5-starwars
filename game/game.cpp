@@ -2,14 +2,78 @@
 #include "general.hpp"
 #include <iostream>
 #include <vector>
-Game::Game(int r)
-    : spaceship()
+Game::Game(const std::string map_file_name)
+    : map(map_file_name), spaceship()
 {
+    translate_map(map);
     counter = 0;
-    rounds = r;
+    objects_number = 0;
     win = new Window(1024, 768);
-    game_status = GAME_RUNNING;
     result = NO_RESULT;
+}
+
+void Game::receive_initial_data(std::vector<std::string> map_lines)
+{
+    std::vector<std::string> tokens;
+    tokens = parse_line(map_lines[0]);
+    columns = stoi(tokens[0]);
+    rows = stoi(tokens[1]);
+    
+    tokens = parse_line(map_lines[1]);
+    rounds = stoi(tokens[0]);
+}
+
+void Game::translate_map(Map &map)
+{
+    std::vector<std::string> map_lines = map.get_lines();
+    std::vector<std::string> tokens;
+    receive_initial_data(map_lines);
+    for (int i = 3; i < map_lines.size(); ++i)
+    {
+        tokens = parse_line(map_lines[i]);
+        if (tokens[0] == ROUNDS_MAP_DELIMITER)
+            break;
+
+        MapScale section = {stoi(tokens[1]), stoi(tokens[2])};
+        if (tokens[0] == ENEMY_MAP)
+            create_object(objects::ENEMY, section);
+        
+        if (tokens[0] == MOVING_ENEMY_MAP)
+            create_object(objects::MOVING_ENEMY, section);
+        
+        if (tokens[0] == HOSTAGE_MAP)
+            create_object(objects::HOSTAGE, section);
+    }
+}
+
+void Game::create_object(int type, MapScale section)
+{
+    objects_number++;
+    double width_offset = (1024 / columns) * (section.column - 1);
+    double height_offset = (768 / rows) * (section.row - 1);
+    Point _loc = Point(width_offset, height_offset);
+    switch (type)
+    {
+        case objects::ENEMY:
+        {
+            Enemy* new_enemy = new Enemy(_loc);
+            enemies.push_back(new_enemy);
+            break;
+        }
+
+        case objects::MOVING_ENEMY:
+        {
+            MovingEnemy* new_m_enemy = new MovingEnemy(_loc);
+            enemies.push_back(new_m_enemy);
+            break;
+        }
+        case objects::HOSTAGE:
+        {
+            Hostage* new_hostage = new Hostage(_loc);
+            hostages.push_back(new_hostage);
+            break;
+        }
+    }
 }
 
 void Game::run()
@@ -115,39 +179,6 @@ bool Game:: process_event()
         
     }
     return true;
-}
-
-void Game::create_enemies()
-{
-    // this is a temp implementaion
-    Point p1(700, 50);
-    Point p2(400, 50);
-    Point p3(300, 100);
-    Point p4(500, 200);
-    Point p5(654, 100);
-    Point p6(200, 250);
-    Point p7(600, 80);
-    Point p8(100, 300);
-    Enemy* a = new Enemy(p1);
-    Enemy* b = new Enemy(p2);
-    Enemy* c = new Enemy(p3);
-    Enemy* d = new Enemy(p4);
-    enemies.push_back(a);
-    enemies.push_back(b);
-    enemies.push_back(c);
-    enemies.push_back(d);
-   // enemies.push_back(Enemy(p1));
-    //enemies.push_back(Enemy(p2));
-    //enemies.push_back(Enemy(p3));
-    //enemies.push_back(Enemy(p4));
-    //enemies.push_back(Enemy(p5));
-    MovingEnemy* s = new  MovingEnemy(p6);
-    enemies.push_back(s);
-
-    Hostage* h = new Hostage(p7);
-    Hostage* k = new Hostage(p8);
-    hostages.push_back(h);
-    hostages.push_back(k);
 }
 
 void Game::spaceship_hit_enemy()

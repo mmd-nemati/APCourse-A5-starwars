@@ -10,7 +10,17 @@ bool objects_conflict(Rectangle b1, Rectangle b2)
     
 }
 
-void win_or_lose_check(int status)
+std::vector<std::string> parse_line(std::string line)
 {
-    
+    std::vector<std::string> tokens;
+    size_t pos = 0;
+
+    while ((pos = line.find(TOKENS_DELIMITER)) != std::string::npos) 
+    {
+        tokens.push_back(line.substr(0, pos));
+        line.erase(0, pos + TOKENS_DELIMITER.length());
+    }   
+    tokens.push_back(line.substr(0, pos));
+
+    return tokens;
 }

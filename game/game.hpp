@@ -7,6 +7,7 @@
 #include "movingenemy.hpp"
 #include "hostage.hpp"
 #include <vector>
+#include <string>
 constexpr int WINDOW_WIDTH = 1024;
 constexpr int WINDOW_HEIGHT = 768;
 constexpr bool GAME_RUNNING = true;
@@ -19,7 +20,7 @@ constexpr int LOSE = 2;
 class Game
 {
     public: 
-        Game(int r);
+        Game(const std::string map_file_name);
         void render();
         void run();
         void handle_key_press(int dir);
@@ -40,11 +41,17 @@ class Game
         void player_win();
         void end();
         bool get_result() { return result; }       
+        void translate_map(Map &map);
+        void receive_initial_data(std::vector<std::string> map_lines);
+        void create_object(int type, MapScale scale);
     private:
+        Map map;
         Window* win;
+        int columns;
+        int rows;
         int counter;
         int rounds;
-        bool game_status;
+        int objects_number;
         Spaceship spaceship;
         std::vector<Enemy*> enemies;
         std::vector<Hostage*> hostages;

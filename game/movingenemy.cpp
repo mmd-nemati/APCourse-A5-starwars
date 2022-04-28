@@ -9,7 +9,7 @@ MovingEnemy::MovingEnemy(Point _loc)
 
 bool MovingEnemy::goes_out()
 {
-    if (body.x <= 0 || body.x >= 950)
+    if (body.x < 0 || body.x > 950)
         return true;
     return false;
 }

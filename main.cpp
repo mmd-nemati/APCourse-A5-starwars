@@ -3,8 +3,9 @@
 #include "game/game.hpp"
 int main(int argc, char *argv[])
 {
-    Game game(4);
-    game.create_enemies();
+    Game game(argv[1]);
+    //game.translate_map(Map(argv[1]));
+    //game.create_enemies();
     while(game.get_result() == NO_RESULT)
     {
         game.run();
