@@ -3,6 +3,7 @@
 #include "../src/rsdl.hpp"
 #include <string>
 #include <vector>
+#include <ctime>
 namespace objects
 {
     enum GameObjects

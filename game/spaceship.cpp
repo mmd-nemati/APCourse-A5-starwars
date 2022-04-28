@@ -14,6 +14,13 @@ Spaceship::Spaceship()
     //body = Rectangle(location.x, location.y);
 }
 
+void Spaceship::put_on_map(Point _loc)
+{
+    body.x = _loc.x;
+    body.y = _loc.y;
+    location = _loc;
+}
+
 void Spaceship::set_moving(int _dir)
 {
     is_moving = true;

@@ -5,7 +5,10 @@
 Game::Game(const std::string map_file_name)
     : map(map_file_name), spaceship()
 {
-    translate_map(map);
+    srand(time(0));
+    receive_initial_data(map.get_lines());
+    //translate_map(map, 0);
+    //rounds = 0;
     counter = 0;
     objects_number = 0;
     win = new Window(1024, 768);
@@ -23,12 +26,11 @@ void Game::receive_initial_data(std::vector<std::string> map_lines)
     rounds = stoi(tokens[0]);
 }
 
-void Game::translate_map(Map &map)
+void Game::translate_map(Map &map, int round)
 {
     std::vector<std::string> map_lines = map.get_lines();
     std::vector<std::string> tokens;
-    receive_initial_data(map_lines);
-    for (int i = 3; i < map_lines.size(); ++i)
+    for (int i = (2+round+objects_number); i < map_lines.size(); ++i)
     {
         tokens = parse_line(map_lines[i]);
         if (tokens[0] == ROUNDS_MAP_DELIMITER)
@@ -76,22 +78,40 @@ void Game::create_object(int type, MapScale section)
     }
 }
 
-void Game::run()
+void Game::init_round(int round)
 {
-    render();
-    counter++;
-    spaceship.move();
-    spaceship.bullets_move();
-    spaceship_hit_enemy();
-    spaceship_hit_hostage();
-    move_enemies();
-    if (this->can_enemies_shoot())
-        enemies_shoot();
-    enemies_bullets_move();
-    //enemies_hit_spaceship();
-    spaceship_touch_others();
-    process_event();
-    delay(30);
+    enemies.clear();
+    hostages.clear();
+
+    int random = rand();
+    double random2 = rand();
+    Point _loc = {random % 1024, 768-SPACESHIP_HEIGHT};
+    spaceship.put_on_map(_loc);
+    translate_map(map, round);
+}
+void Game::run(int round)
+{
+    init_round(round);
+    while(result == NO_RESULT)
+    {
+        render();
+        counter++;
+        spaceship.move();
+        spaceship.bullets_move();
+        spaceship_hit_enemy();
+        spaceship_hit_hostage();
+        move_enemies();
+        if (this->can_enemies_shoot())
+            enemies_shoot();
+        enemies_bullets_move();
+        //enemies_hit_spaceship();
+        spaceship_touch_others();
+        process_event();
+        delay(30);
+    }
+    result = NO_RESULT;
+    //rounds++;
+
 }
 void Game:: render()
 {
@@ -202,7 +222,8 @@ void Game::enemies_hit_spaceship()
                 enemies[i]->get_bullets()[j].get_body()))
             {   
                 enemies[i]->delete_bullet(j);
-                player_lose();
+                result = LOSE;
+                //player_lose();
                 continue;
             }
 }

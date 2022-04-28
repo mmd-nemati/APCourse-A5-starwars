@@ -22,7 +22,7 @@ class Game
     public: 
         Game(const std::string map_file_name);
         void render();
-        void run();
+        void run(int round);
         void handle_key_press(int dir);
         bool process_event();
         void create_enemies();
@@ -41,7 +41,9 @@ class Game
         void player_win();
         void end();
         bool get_result() { return result; }       
-        void translate_map(Map &map);
+        int get_rounds() { return rounds; }
+        void translate_map(Map &map, int offset);
+        void init_round(int round);
         void receive_initial_data(std::vector<std::string> map_lines);
         void create_object(int type, MapScale scale);
     private:

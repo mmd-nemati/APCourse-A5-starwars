@@ -18,6 +18,7 @@ class Spaceship
     public:
         Spaceship();
         //Spaceship(Window* win);
+        void put_on_map(Point _loc);
         void move();
         void stop();
         void shoot();
