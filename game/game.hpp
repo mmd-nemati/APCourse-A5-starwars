@@ -17,6 +17,8 @@ constexpr int ENEMY_SHOOT = 2;
 constexpr int NO_RESULT = 0;
 constexpr int WIN = 1;
 constexpr int LOSE = 2;
+const std::string WIN_PROMPT_TEXT = "VICTORY!";
+const std::string LOSE_PROMPT_TEXT = "YOU DIED!";
 class Game
 {
     public: 
@@ -39,6 +41,8 @@ class Game
         void move_enemies();
         void player_lose();
         void player_win();
+        bool is_lost();
+        void win_check(int cur_round);
         void end();
         bool get_result() { return result; }       
         int get_rounds() { return rounds; }

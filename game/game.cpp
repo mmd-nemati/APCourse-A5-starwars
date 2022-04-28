@@ -80,19 +80,23 @@ void Game::create_object(int type, MapScale section)
 
 void Game::init_round(int round)
 {
+    counter = -50;
+    for (int i = 0; i < enemies.size(); i++)
+        enemies[i]->delete_all_bullets();
     enemies.clear();
     hostages.clear();
 
-    int random = rand();
-    double random2 = rand();
-    Point _loc = {random % 1024, 768-SPACESHIP_HEIGHT};
+    int rand_loc = rand();
+    Point _loc = {rand_loc % 1024, 768-SPACESHIP_HEIGHT};
     spaceship.put_on_map(_loc);
+
     translate_map(map, round);
 }
+
 void Game::run(int round)
 {
     init_round(round);
-    while(result == NO_RESULT)
+    while (result == NO_RESULT)
     {
         render();
         counter++;
@@ -104,14 +108,13 @@ void Game::run(int round)
         if (this->can_enemies_shoot())
             enemies_shoot();
         enemies_bullets_move();
-        //enemies_hit_spaceship();
         spaceship_touch_others();
         process_event();
+        win_check(round);
         delay(30);
     }
-    result = NO_RESULT;
-    //rounds++;
-
+    if (round != rounds && result == WIN)
+          result = NO_RESULT;
 }
 void Game:: render()
 {
@@ -293,6 +296,17 @@ void Game::spaceship_touch_others()
     this->spaceship_touch_hostage();
 }
 
+void Game::win_check(int cur_round)
+{
+    //if (cur_round != rounds)
+      //  return;
+    for (int i = 0; i < enemies.size(); i++)
+        if (enemies[i]->is_alive())
+            return;
+    
+    player_win();
+}
+
 void Game::player_lose()
 {
     result = LOSE;
@@ -303,6 +317,11 @@ void Game::player_win()
     result = WIN;
 }
 
+bool Game::is_lost()
+{
+    return (result == LOSE);
+}
+
 void Game::end()
 {
     while(true)
@@ -311,12 +330,12 @@ void Game::end()
         {   
             case LOSE:   
                 win->draw_img("assets/photos/back.png");
-                win->show_text("game over you stupid fucking donkey!", Point(150, 300), WHITE, "assets/fonts/FreeSans.ttf", 45);
+                win->show_text(LOSE_PROMPT_TEXT, Point(330, 350), RED, "assets/fonts/Meslo-Regular.ttf", 70);
                 break;
             
             case WIN:
                 win->draw_img("assets/photos/back.png");
-                win->show_text("The stupid wins!", Point(150, 300), WHITE, "assets/fonts/FreeSans.ttf", 45);
+                win->show_text(WIN_PROMPT_TEXT, Point(350, 350), GREEN, "assets/fonts/Meslo-Regular.ttf", 70);
                 break;
         }     
 

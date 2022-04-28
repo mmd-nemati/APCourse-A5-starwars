@@ -22,6 +22,7 @@ class Enemy
         void die();
         bool is_alive();
         void delete_bullet(int index);
+        void delete_all_bullets();
         Rectangle get_body() { return body; }
         std::vector<Bullet> get_bullets() { return bullets; }
     protected:

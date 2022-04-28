@@ -47,6 +47,12 @@ void Enemy::delete_bullet(int index)
 {
     bullets.erase(bullets.begin() + index);
 }
+
+void Enemy::delete_all_bullets()
+{
+    for (int i = 0; i < bullets.size(); i++)
+        delete_bullet(i);
+}
 // stop bullet
 
 void Enemy::move()
