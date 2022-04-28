@@ -2,15 +2,10 @@
 #define __ENEMY_H__
 #include "../src/rsdl.hpp"
 #include "bullet.hpp"
-//#include "spaceship.hpp"
 #include "general.hpp"
+#include "constants.hpp"
 #include <vector>
 
-constexpr int ENEMY_INITIAL_HEALTH = 100;
-constexpr int ENEMY_DAMAGE = 20;
-constexpr int ENENMY_SCALE = 45;
-constexpr int ALIVE = true;
-constexpr bool DEAD = false;
 class Enemy
 {
     public:

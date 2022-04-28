@@ -1,10 +1,8 @@
 #ifndef __BULLET_H__
 #define __BULLET_H__
 #include "../src/rsdl.hpp"
+#include "constants.hpp"
 
-constexpr int BULLET_SCALE = 18;
-constexpr double SPACESHIP_BULLET_SPEED = -20;
-constexpr double ENEMY_BULLET_SPEED = 10;
 class Bullet
 {
     public:

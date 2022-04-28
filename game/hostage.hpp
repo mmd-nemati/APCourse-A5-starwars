@@ -1,10 +1,8 @@
 #ifndef __HOSTAGE_H__
 #define __HOSTAGE_H__
 #include "../src/rsdl.hpp"
+#include "constants.hpp"
 
-constexpr double HOSTAGE_SCALE = 30;
-constexpr double HOSTAGE_WIDTH = 50;
-constexpr double HOSTAGE_HEIGHT = 31;
 class Hostage
 {
     public:

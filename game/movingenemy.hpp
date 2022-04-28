@@ -2,7 +2,8 @@
 #define __MOVING_ENEMY_H__
 #include "enemy.hpp"
 #include "../src/rsdl.hpp"
-constexpr double INITIAL_MOVING_ENEMY_X_SPEED = 20;
+#include "constants.hpp"
+
 class MovingEnemy : public Enemy
 {
     public:

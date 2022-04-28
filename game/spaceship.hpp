@@ -3,21 +3,13 @@
 #include "../src/rsdl.hpp"
 #include "enemy.hpp"
 #include "bullet.hpp"
+#include "constants.hpp"
 #include <vector>
-constexpr int SPACESHIP_HEIGHT = 90;
-constexpr int SPACESHIP_WIDTH = 50;
-constexpr double INITIAL_VELOCITY = 0;
-constexpr double MOVING_VELOCITY = 20;
-constexpr int UP = 1;
-constexpr int DOWN = 2;
-constexpr int LEFT = 3;
-constexpr int RIGHT = 4;
 
 class Spaceship 
 {
     public:
         Spaceship();
-        //Spaceship(Window* win);
         void put_on_map(Point _loc);
         void move();
         void stop();

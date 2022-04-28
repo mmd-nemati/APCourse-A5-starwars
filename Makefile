@@ -11,7 +11,7 @@ ${EXECUTABLE}: ${OBJECTS}
 rsdl.o: src/rsdl.hpp src/rsdl.cpp
 	$(CC) -c src/rsdl.cpp -o rsdl.o
 
-map.o: game/map.hpp game/map.cpp
+map.o: game/constants.hpp game/map.hpp game/map.cpp
 	${CC} -c game/map.cpp -o map.o
 
 general.o: src/rsdl.hpp game/general.hpp game/general.cpp
@@ -20,13 +20,13 @@ general.o: src/rsdl.hpp game/general.hpp game/general.cpp
 game.o: src/rsdl.hpp game/game.hpp game/spaceship.hpp game/game.cpp
 	${CC} -c game/game.cpp -o game.o
 
-spaceship.o: src/rsdl.hpp game/spaceship.hpp game/spaceship.cpp
+spaceship.o: src/rsdl.hpp game/constants.hpp game/spaceship.hpp game/spaceship.cpp
 	${CC} -c game/spaceship.cpp -o spaceship.o
 
-bullet.o: src/rsdl.hpp game/bullet.hpp game/bullet.cpp
+bullet.o: src/rsdl.hpp game/constants.hpp game/bullet.hpp game/bullet.cpp
 	${CC} -c game/bullet.cpp -o bullet.o
 
-enemy.o: src/rsdl.hpp game/enemy.hpp game/enemy.cpp
+enemy.o: src/rsdl.hpp game/constants.hpp game/enemy.hpp game/enemy.cpp
 	${CC} -c game/enemy.cpp -o enemy.o
 
 movingenemy.o: game/enemy.hpp game/movingenemy.hpp game/movingenemy.cpp

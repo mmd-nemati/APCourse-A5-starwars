@@ -6,19 +6,10 @@
 #include "enemy.hpp"
 #include "movingenemy.hpp"
 #include "hostage.hpp"
+#include "constants.hpp"
 #include <vector>
 #include <string>
-constexpr int WINDOW_WIDTH = 1024;
-constexpr int WINDOW_HEIGHT = 768;
-constexpr bool GAME_RUNNING = true;
-constexpr bool GAME_STOPPED = false;
-constexpr int SPACESHIP_SHOOT = 1;
-constexpr int ENEMY_SHOOT = 2;
-constexpr int NO_RESULT = 0;
-constexpr int WIN = 1;
-constexpr int LOSE = 2;
-const std::string WIN_PROMPT_TEXT = "VICTORY!";
-const std::string LOSE_PROMPT_TEXT = "YOU DIED!";
+
 class Game
 {
     public: 
