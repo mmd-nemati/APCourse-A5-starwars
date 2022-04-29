@@ -34,11 +34,6 @@ void Enemy::bullets_move()
     }
 }
 
-void Enemy::move()
-{
-    return;
-}
-
 void Enemy::delete_bullet(int index)
 {
     bullets.erase(bullets.begin() + index);

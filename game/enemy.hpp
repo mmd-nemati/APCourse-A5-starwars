@@ -12,7 +12,7 @@ class Enemy
         Enemy();
         Enemy(Point _loc);
         
-        virtual void move();
+        virtual void move() {};
         void shoot();
         void bullets_move();
         void die();
