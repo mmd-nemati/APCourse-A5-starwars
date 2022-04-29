@@ -1,0 +1,21 @@
+# This file contains informtion on the format of the map of starwars game.
+
+# First line is columns and rows of your game. Note that the delimiter is '-'
+# second line is number of rounds in your game.
+# other lines are objects of your game and their position:
+# E: Enemy ---- M: MovingEnemy ---- H: Hostage
+# rounds delimiter: '#'
+
+10-8
+2
+E-2-3
+M-2-4
+H-1-1
+#
+E-1-1
+M-3-5
+H-2-1
+
+
+
+# You can add as many rounds and objects as you want (in this particular format).
