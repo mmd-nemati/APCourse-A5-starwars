@@ -1,13 +1,13 @@
 #include "enemy.hpp"
 
 Enemy::Enemy()
- :  body(0, 0, ENENMY_SCALE, ENENMY_SCALE)
+    :  body(0, 0, ENENMY_WIDTH, ENEMY_HEIGHT)
 {
     status = ALIVE;
 }
 
 Enemy::Enemy(Point _loc)
- : body(_loc.x, _loc.y, 56, 80)
+    : body(_loc.x, _loc.y, ENENMY_WIDTH, ENEMY_HEIGHT)
 {
     location = _loc;
     status = ALIVE;
@@ -21,15 +21,6 @@ void Enemy::shoot()
     bullets.push_back(new_bullet);
 }
 
-void Enemy::die()
-{
-    status = DEAD;
-}
-
-bool Enemy::is_alive()
-{
-    return (status == ALIVE);
-}
 void Enemy::bullets_move()
 {
     for (int i = 0; i < bullets.size(); i++)
@@ -43,6 +34,11 @@ void Enemy::bullets_move()
     }
 }
 
+void Enemy::move()
+{
+    return;
+}
+
 void Enemy::delete_bullet(int index)
 {
     bullets.erase(bullets.begin() + index);
@@ -53,10 +49,13 @@ void Enemy::delete_all_bullets()
     for (int i = 0; i < bullets.size(); i++)
         delete_bullet(i);
 }
-// stop bullet
 
-void Enemy::move()
+void Enemy::die()
 {
-    //std::cout << "Moving" << std::endl;
-    return;
+    status = DEAD;
+}
+
+bool Enemy::is_alive()
+{
+    return (status == ALIVE);
 }

@@ -1,6 +1,5 @@
 #include "movingenemy.hpp"
 
-
 MovingEnemy::MovingEnemy(Point _loc)
  : Enemy(_loc)
 {
@@ -13,12 +12,11 @@ bool MovingEnemy::goes_out()
         return true;
     return false;
 }
+
 void MovingEnemy::move()
 {
-    //std::cout << "Moving" << std::endl;
     if (this->goes_out())
         vx = -vx;
-        //std::cout << "out" << std::endl;
     location.x += vx;
     body.x = location.x;
     body.y = location.y;

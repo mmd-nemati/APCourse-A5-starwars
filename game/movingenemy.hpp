@@ -8,11 +8,10 @@ class MovingEnemy : public Enemy
 {
     public:
         MovingEnemy(Point _loc);
-        virtual void move();
+
         bool goes_out();
+        virtual void move();
     protected:
         int vx;
 };
-
-
 #endif

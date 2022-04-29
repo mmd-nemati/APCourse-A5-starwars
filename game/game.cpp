@@ -1,17 +1,15 @@
 #include "game.hpp"
-#include "general.hpp"
 #include <iostream>
 #include <vector>
+
 Game::Game(const std::string map_file_name)
-    : map(map_file_name), spaceship()
+    : gui(), map(map_file_name), spaceship() 
 {
     srand(time(0));
     receive_initial_data(map.get_lines());
-    //translate_map(map, 0);
-    //rounds = 0;
     counter = 0;
     objects_number = 0;
-    win = new Window(1024, 768);
+    win = new Window(WINDOW_WIDTH, WINDOW_HEIGHT);
     result = NO_RESULT;
 }
 
@@ -23,14 +21,14 @@ void Game::receive_initial_data(std::vector<std::string> map_lines)
     rows = stoi(tokens[1]);
     
     tokens = parse_line(map_lines[1]);
-    rounds = stoi(tokens[0]);
+    rounds_num = stoi(tokens[0]);
 }
 
 void Game::translate_map(Map &map, int round)
 {
     std::vector<std::string> map_lines = map.get_lines();
     std::vector<std::string> tokens;
-    for (int i = (2+round+objects_number); i < map_lines.size(); ++i)
+    for (int i = (2 + round + objects_number); i < map_lines.size(); ++i)
     {
         tokens = parse_line(map_lines[i]);
         if (tokens[0] == ROUNDS_MAP_DELIMITER)
@@ -38,44 +36,46 @@ void Game::translate_map(Map &map, int round)
 
         MapScale section = {stoi(tokens[1]), stoi(tokens[2])};
         if (tokens[0] == ENEMY_MAP)
-            create_object(objects::ENEMY, section);
+            create_object(object::ENEMY, section);
         
         if (tokens[0] == MOVING_ENEMY_MAP)
-            create_object(objects::MOVING_ENEMY, section);
+            create_object(object::MOVING_ENEMY, section);
         
         if (tokens[0] == HOSTAGE_MAP)
-            create_object(objects::HOSTAGE, section);
+            create_object(object::HOSTAGE, section);
     }
 }
 
 void Game::create_object(int type, MapScale section)
 {
-    objects_number++;
-    double width_offset = (1024 / columns) * (section.column - 1);
-    double height_offset = (768 / rows) * (section.row - 1);
+    double width_offset = (WINDOW_WIDTH / columns) * (section.column - 1);
+    double height_offset = (WINDOW_HEIGHT / rows) * (section.row - 1);
     Point _loc = Point(width_offset, height_offset);
     switch (type)
     {
-        case objects::ENEMY:
+        case object::ENEMY:
         {
             Enemy* new_enemy = new Enemy(_loc);
             enemies.push_back(new_enemy);
             break;
         }
-
-        case objects::MOVING_ENEMY:
+        case object::MOVING_ENEMY:
         {
             MovingEnemy* new_m_enemy = new MovingEnemy(_loc);
             enemies.push_back(new_m_enemy);
             break;
         }
-        case objects::HOSTAGE:
+        case object::HOSTAGE:
         {
             Hostage* new_hostage = new Hostage(_loc);
             hostages.push_back(new_hostage);
             break;
         }
+        default:
+            return;
     }
+
+    objects_number++;
 }
 
 void Game::init_round(int round)
@@ -87,68 +87,48 @@ void Game::init_round(int round)
     hostages.clear();
 
     int rand_loc = rand();
-    Point _loc = {rand_loc % 1024, 768-SPACESHIP_HEIGHT};
+    Point _loc = {rand_loc % WINDOW_WIDTH, WINDOW_HEIGHT-SPACESHIP_HEIGHT};
     spaceship.put_on_map(_loc);
 
     translate_map(map, round);
 }
 
-void Game::run(int round)
+void Game::run(int cur_round)
 {
-    init_round(round);
+    init_round(cur_round);
     while (result == NO_RESULT)
     {
         render();
+        process_event();
+
         counter++;
         spaceship.move();
-        spaceship.bullets_move();
-        spaceship_hit_enemy();
-        spaceship_hit_hostage();
-        move_enemies();
-        if (this->can_enemies_shoot())
-            enemies_shoot();
-        enemies_bullets_move();
+        bullets_move();
+        spaceship_shoot_others();
         spaceship_touch_others();
-        process_event();
-        win_check(round);
+        move_enemies();
+        enemies_shoot();
+
+        win_check(cur_round);
         delay(30);
     }
-    if (round != rounds && result == WIN)
+    if (cur_round != rounds_num && result == WIN)
           result = NO_RESULT;
 }
-void Game:: render()
+
+void Game::render()
 {
     win->clear();
-    win->draw_img("assets/photos/back.png");
-    win->draw_img("assets/photos/ship.png",spaceship.get_body());
-    //win->draw_rect(spaceship.get_body());
-    for (int i = 0; i < spaceship.get_bullets().size(); i++)
-        win->draw_img("assets/photos/ship-bullet.png", 
-        Rectangle(spaceship.get_bullets()[i].get_loc(), BULLET_SCALE, BULLET_SCALE));
-        //win->draw_rect(spaceship.get_bullets()[i].get_body(), WHITE);
-        //win->draw_img("assets/photos/ship-bullet.png", spaceship.get_bullets()[i].get_body());
 
+    gui.draw_background(win);
+    gui.draw_spaceship(win, spaceship);
+    gui.draw_enemies(win, enemies);
+    gui.draw_hostages(win, hostages);
+    gui.draw_bullets(win, spaceship.get_bullets(), SPACESHIP);
     for (int i = 0; i < enemies.size(); i++)
-        if (enemies[i]->is_alive())
-            win->draw_img("assets/photos/enemy-ship2.png", enemies[i]->get_body());
-        //win->draw_rect(enemies[i].get_body(), RED);
+        gui.draw_bullets(win, enemies[i]->get_bullets(), ENEMY);
     
-    for (int i = 0; i < enemies.size(); i++)
-        for (int j = 0; j < enemies[i]->get_bullets().size(); j++)
-            win->draw_img("assets/photos/enemy-bullet2.png", enemies[i]->get_bullets()[j].get_body());;
-            //win->draw_rect(enemies[i]->get_bullets()[j].get_body(), GREEN);
-
-    for (int i = 0; i < hostages.size(); i++)
-        win->draw_img("assets/photos/hostage.png", hostages[i]->get_body());
-        //win->draw_rect(hostages[i]->get_body());
-
     win->update_screen();
-    
-}
-
-void Game::handle_key_press(int dir)
-{
-    spaceship.move();
 }
 
 int get_move_direction(Event &event)
@@ -167,10 +147,10 @@ int get_move_direction(Event &event)
 
     return 0;
 }
+
 bool Game:: process_event()
 {
     Event new_event;
-    int d;
     new_event = this->win->poll_for_event();
     switch(new_event.get_type())
     {
@@ -199,12 +179,11 @@ bool Game:: process_event()
             break;        
         
         default:;
-        
     }
     return true;
 }
 
-void Game::spaceship_hit_enemy()
+void Game::spaceship_shoot_enemy()
 {
     for (int i = 0; i < enemies.size(); i++)
         for (int j = 0; j < spaceship.get_bullets().size(); j++)
@@ -212,12 +191,12 @@ void Game::spaceship_hit_enemy()
                 enemies[i]->get_body()) && enemies[i]->is_alive())
             { 
                 spaceship.delete_bullet(j);
-                kill_enemy(i);
+                enemies[i]->die();
                 continue;           
             }
 }
 
-void Game::enemies_hit_spaceship()
+void Game::enemies_shoot_spaceship()
 {
     for (int i = 0; i < enemies.size(); i++)
         for (int j = 0; j < enemies[i]->get_bullets().size(); j++)
@@ -226,12 +205,11 @@ void Game::enemies_hit_spaceship()
             {   
                 enemies[i]->delete_bullet(j);
                 result = LOSE;
-                //player_lose();
                 continue;
             }
 }
 
-void Game::spaceship_hit_hostage()
+void Game::spaceship_shoot_hostage()
 {
     for (int i = 0; i < hostages.size(); i++)
         for (int j = 0; j < spaceship.get_bullets().size(); j++)
@@ -243,20 +221,17 @@ void Game::spaceship_hit_hostage()
 void Game::spaceship_touch_enemy()
 {
     for (int i = 0; i < enemies.size(); i++)
-        if (objects_conflict(spaceship.get_body(), enemies[i]->get_body()) && enemies[i]->is_alive())
-            player_lose();
+        if (objects_conflict(spaceship.get_body(), 
+            enemies[i]->get_body()) && enemies[i]->is_alive())
+                player_lose();
 }
 
 void Game::spaceship_touch_hostage()
 {
     for (int i = 0; i < hostages.size(); i++)
-        if (objects_conflict(spaceship.get_body(), hostages[i]->get_body()))
-            player_lose();
-}
-
-void Game::kill_enemy(int index)
-{
-    enemies[index]->die();
+        if (objects_conflict(spaceship.get_body(), 
+            hostages[i]->get_body()))
+                player_lose();
 }
 
 void Game::move_enemies()
@@ -276,6 +251,8 @@ bool Game::can_enemies_shoot()
 
 void Game::enemies_shoot()
 {
+    if (!can_enemies_shoot())
+        return;
     for (int i = 0; i < enemies.size(); i++)
         if (enemies[i]->is_alive())
             enemies[i]->shoot();
@@ -287,19 +264,27 @@ void Game::enemies_bullets_move()
         enemies[i]->bullets_move();
 }
 
+void Game::bullets_move()
+{
+    spaceship.bullets_move();
+    enemies_bullets_move();
+}
+
+void Game::spaceship_shoot_others()
+{
+    spaceship_shoot_enemy();
+    spaceship_shoot_hostage();
+}
 
 void Game::spaceship_touch_others()
 {
-    // hit hostages
-    this->enemies_hit_spaceship();
+    this->enemies_shoot_spaceship();
     this->spaceship_touch_enemy();
     this->spaceship_touch_hostage();
 }
 
 void Game::win_check(int cur_round)
 {
-    //if (cur_round != rounds)
-      //  return;
     for (int i = 0; i < enemies.size(); i++)
         if (enemies[i]->is_alive())
             return;
@@ -317,25 +302,20 @@ void Game::player_win()
     result = WIN;
 }
 
-bool Game::is_lost()
-{
-    return (result == LOSE);
-}
-
 void Game::end()
 {
     while(true)
     {
+        gui.draw_background(win);
+        
         switch(result)
         {   
             case LOSE:   
-                win->draw_img("assets/photos/back.png");
-                win->show_text(LOSE_PROMPT_TEXT, Point(330, 350), RED, "assets/fonts/Meslo-Regular.ttf", 70);
+                gui.show_lose(win);
                 break;
             
             case WIN:
-                win->draw_img("assets/photos/back.png");
-                win->show_text(WIN_PROMPT_TEXT, Point(350, 350), GREEN, "assets/fonts/Meslo-Regular.ttf", 70);
+                gui.show_victory(win);
                 break;
         }     
 

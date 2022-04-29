@@ -2,16 +2,12 @@
 #include "spaceship.hpp"
 #include "general.hpp"
 Spaceship::Spaceship()
-  :  body(462, 768-SPACESHIP_HEIGHT, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
+  :  body(0, 0, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
 {
-    location =  {462, 768-SPACESHIP_HEIGHT};
+    location =  {0, 0};
     vx = INITIAL_VELOCITY;
     vy = INITIAL_VELOCITY;
-    ax = MOVING_VELOCITY;
-    ay = MOVING_VELOCITY;
     is_moving = false;
-    //result = NO_RESULT;
-    //body = Rectangle(location.x, location.y);
 }
 
 void Spaceship::put_on_map(Point _loc)
@@ -42,6 +38,7 @@ bool goes_out_of_map(int direction, int coordinate)
         
         case RIGHT:
             return (coordinate + SPACESHIP_WIDTH > 1010);
+
         default:;
     }
 
@@ -94,7 +91,7 @@ void Spaceship::shoot()
 
 bool is_out_of_map(Point _loc)
 {
-  return (_loc.x < 0 || _loc.x > 1024 || _loc.y < 0 || _loc.y > 768);
+  return (_loc.x < 0 || _loc.x > WINDOW_WIDTH || _loc.y < 0 || _loc.y > WINDOW_HEIGHT);
 }
 
 void Spaceship::bullets_move()
@@ -114,21 +111,3 @@ void Spaceship::delete_bullet(int index)
 {
     bullets.erase(bullets.begin() + index);
 }
-
-void Spaceship::touch_enemy( Enemy* enemy)
-{
-    if (objects_conflict(this->body, enemy->get_body()))
-        // implement lose function    
-        std::cout << "TOuch" << std::endl;
-    return;
-}
-
-/*void Spaceship::win()
-{
-    result = WIN;
-}
-
-void Spaceship::lose()
-{
-    result = LOSE;
-}*/
